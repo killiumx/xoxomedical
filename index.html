@@ -990,7 +990,7 @@ body{font-family:'Inter',sans-serif;background:#F0F4F8;color:#1A2332;font-size:1
   <div class="wh-card">
     <h3>Send to Discord</h3>
     <input id="whUrl" type="text" placeholder="Webhook URL..." value="https://discord.com/api/webhooks/1491115181302878362/qQYxce4E4qA0aZbN0kJL9EwjcBOHfBUCHarDMpr0a-Rg_WBj36sphiwBawpl209qWm7r">
-    <button class="tbtn tbtn-blue" style="width:100%" id="whBtn" onclick="sendWebhook()">Send Report Summary</button>
+    <button class="tbtn tbtn-blue" style="width:100%" id="whBtn" onclick="sendWebhook()">Send Report as Image</button>
     <div class="wh-status" id="whStatus"></div>
   </div>
 
@@ -1616,52 +1616,70 @@ function buildVitalsChart(){
 }
 
 function sendWebhook(){
-  var url  = document.getElementById('whUrl').value.trim();
-  var btn  = document.getElementById('whBtn');
-  var st   = document.getElementById('whStatus');
+  var url = document.getElementById('whUrl').value.trim();
+  var btn = document.getElementById('whBtn');
+  var st  = document.getElementById('whStatus');
   if(!url){st.className='wh-status err';st.textContent='Enter a webhook URL.';return;}
   btn.disabled = true;
   st.className = 'wh-status wait';
-  st.textContent = 'Sending...';
-  var name  = document.getElementById('pName').value.trim()||'Unknown Patient';
-  var pid   = document.getElementById('pID').value.trim()||'—';
-  var blood = document.getElementById('pBlood').value||'Unknown';
-  var docN  = document.getElementById('docName').value.trim()||'Unknown';
-  var docR  = document.getElementById('docRank').value;
-  var dxP   = document.getElementById('dxPrimary').value.trim()||'—';
-  var now   = new Date();
-  var date  = now.toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
-  var time  = now.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'});
-  var ref   = 'PHM-'+now.getFullYear()+'-'+String(Math.floor(Math.random()*90000)+10000);
-  var examColors = {general:0x2B6CB0,pregnancy:0x97266D,trauma:0xC53030,psych:0x6B46C1,dental:0x276749};
-  var examLabel  = {general:'General Check-Up',pregnancy:'Pregnancy / Antenatal',trauma:'Trauma Assessment',psych:'Psychological',dental:'Dental'}[G.examType];
-  var statusEmoji = {Stable:'🟢',Critical:'🔴','Under Observation':'🟡',Discharged:'🔵'}[G.patientStatus]||'⚪';
-  var embed = {
-    username:'XOXO Hospital',
-    embeds:[{
-      title:'Medical Report — '+name,
-      description:'**Ref:** '+ref+'\n**Date:** '+date+' at '+time+'\n**Exam Type:** '+examLabel+'\n\n---',
-      color: examColors[G.examType]||0x2B6CB0,
-      fields:[
-        {name:'Patient ID',value:pid,inline:true},
-        {name:'Blood Type',value:blood,inline:true},
-        {name:'Status',value:statusEmoji+' '+G.patientStatus,inline:true},
-        {name:'Heart Rate',value:getV('vHR'),inline:true},
-        {name:'Blood Pressure',value:getV('vBP'),inline:true},
-        {name:'O2 Sat',value:getV('vO2'),inline:true},
-        {name:'Primary Diagnosis',value:dxP,inline:false},
-        {name:'Attending',value:docR+' — '+docN,inline:false}
-      ],
-      footer:{text:'XOXO Hospital · Los Santos, San Andreas · Confidential'}
-    }]
-  };
-  fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(embed)})
-    .then(function(r){
-      if(r.ok){st.className='wh-status ok';st.textContent='Sent to Discord!';}
-      else{r.text().then(function(t){st.className='wh-status err';st.textContent='Error '+r.status;});}
+  st.textContent = 'Building report...';
+  openReport();
+  var name   = document.getElementById('pName').value.trim()||'Unknown Patient';
+  var now    = new Date();
+  var date   = now.toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
+  var time   = now.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'});
+  var ref    = document.getElementById('reportSheet').innerHTML.match(/XH-\d{4}-\d{5}/);
+  var refStr = ref ? ref[0] : 'XH-REF';
+  var examLabel = {general:'General Check-Up',pregnancy:'Pregnancy / Antenatal',trauma:'Trauma Assessment',psych:'Psychological Evaluation',dental:'Dental Examination'}[G.examType]||'Check-Up';
+  setTimeout(function(){
+    st.textContent = 'Rendering image...';
+    var sheet = document.getElementById('reportSheet');
+    html2canvas(sheet,{
+      scale: 2,
+      useCORS: true,
+      backgroundColor: '#ffffff',
+      logging: false,
+      scrollY: 0,
+      windowWidth: sheet.scrollWidth,
+      height: sheet.scrollHeight
+    }).then(function(canvas){
+      st.textContent = 'Uploading to Discord...';
+      canvas.toBlob(function(blob){
+        if(!blob){st.className='wh-status err';st.textContent='Image render failed.';btn.disabled=false;return;}
+        var filename = refStr+'-'+name.replace(/\s+/g,'-')+'.png';
+        var fd = new FormData();
+        fd.append('file', blob, filename);
+        var payload = {
+          username: 'XOXO Hospital',
+          content: '**XOXO Hospital** — Medical Report\n**Patient:** '+name+' &nbsp;|&nbsp; **Ref:** '+refStr+'\n**Exam:** '+examLabel+' &nbsp;|&nbsp; **Status:** '+G.patientStatus+'\n**Date:** '+date+' at '+time,
+          embeds: []
+        };
+        fd.append('payload_json', JSON.stringify(payload));
+        fetch(url,{method:'POST',body:fd})
+          .then(function(r){
+            if(r.ok){
+              st.className='wh-status ok';
+              st.textContent='Report image sent to Discord!';
+            } else {
+              r.text().then(function(t){
+                st.className='wh-status err';
+                st.textContent='Discord error '+r.status;
+              });
+            }
+            btn.disabled=false;
+          })
+          .catch(function(e){
+            st.className='wh-status err';
+            st.textContent='Network error: '+e.message;
+            btn.disabled=false;
+          });
+      },'image/png');
+    }).catch(function(e){
+      st.className='wh-status err';
+      st.textContent='Render error: '+e.message;
       btn.disabled=false;
-    })
-    .catch(function(e){st.className='wh-status err';st.textContent=e.message;btn.disabled=false;});
+    });
+  }, 600);
 }
 
 function clearAll(){
@@ -1683,5 +1701,6 @@ function clearAll(){
   updateSummary();
 }
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </body>
 </html>
