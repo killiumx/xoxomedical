@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>XOXO Hospital · Patient Check-Up</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;}
@@ -147,9 +147,10 @@ body{font-family:'Inter',sans-serif;background:#F0F4F8;color:#1A2332;font-size:1
 .wh-status.wait{color:var(--muted);}
 
 /* ── DOC OVERLAY ── */
-.overlay{display:none;position:fixed;inset:0;background:rgba(26,35,50,0.82);z-index:300;overflow-y:auto;padding:24px 16px;}
+.overlay{display:none;position:fixed;inset:0;background:rgba(26,35,50,0.88);z-index:300;overflow-y:auto;-webkit-overflow-scrolling:touch;}
 .overlay.on{display:block;}
-.doc-sheet{background:#fff;max-width:720px;margin:0 auto;border-radius:4px;overflow:hidden;font-family:'Inter',sans-serif;}
+.doc-actions{display:flex;gap:8px;max-width:760px;margin:16px auto 10px;padding:0 8px;position:sticky;top:0;z-index:10;background:transparent;}
+.doc-sheet{background:#fff;max-width:760px;margin:0 auto 40px;border-radius:4px;overflow:visible;font-family:'Inter',sans-serif;box-shadow:0 4px 32px rgba(0,0,0,0.4);}
 .doc-actions{display:flex;gap:8px;max-width:720px;margin:0 auto 10px;}
 
 .report-header{background:#1A2332;padding:24px 32px;display:flex;align-items:center;justify-content:space-between;}
@@ -647,6 +648,127 @@ body{font-family:'Inter',sans-serif;background:#F0F4F8;color:#1A2332;font-size:1
     </div>
   </div>
 
+  <!-- PREGNANCY LIFESTYLE QUESTIONNAIRE -->
+  <div class="preg-section card" id="pregQSection">
+    <div class="card-head">
+      <div class="ch-icon" style="background:var(--pinkbg);">📋</div>
+      <h3>Pregnancy Health Questionnaire</h3>
+    </div>
+    <div class="card-body">
+      <p style="font-size:12px;color:var(--muted);line-height:1.7;margin-bottom:12px;">These questions help assess overall pregnancy health and lifestyle factors. All responses are confidential.</p>
+      <div class="gr2">
+        <div class="fg">
+          <label>Exercise / Physical Activity</label>
+          <select id="qExercise">
+            <option value="5|None — sedentary lifestyle">None — sedentary lifestyle</option>
+            <option value="7|Light — walking, gentle stretching">Light — walking, gentle stretching</option>
+            <option value="9|Moderate — yoga, swimming, 3x/week">Moderate — yoga, swimming, 3x/week</option>
+            <option value="10|Active — approved prenatal exercise daily">Active — approved prenatal exercise daily</option>
+            <option value="4|Overexerting — high intensity not recommended">High intensity — not recommended</option>
+          </select>
+        </div>
+        <div class="fg">
+          <label>Diet / Nutrition</label>
+          <select id="qDiet">
+            <option value="5|Poor — irregular meals, junk food">Poor — irregular meals, junk food</option>
+            <option value="7|Average — some healthy choices">Average — some healthy choices</option>
+            <option value="9|Good — balanced meals, prenatal vitamins">Good — balanced, prenatal vitamins</option>
+            <option value="10|Excellent — dietitian supervised">Excellent — dietitian supervised</option>
+          </select>
+        </div>
+      </div>
+      <div class="gr2">
+        <div class="fg">
+          <label>Stress Levels</label>
+          <select id="qStress">
+            <option value="10|Low — relaxed and comfortable">Low — relaxed and comfortable</option>
+            <option value="8|Moderate — manageable stress">Moderate — manageable stress</option>
+            <option value="5|High — significant stress daily">High — significant stress daily</option>
+            <option value="3|Severe — anxiety or trauma">Severe — anxiety or trauma</option>
+          </select>
+        </div>
+        <div class="fg">
+          <label>Sleep Quality</label>
+          <select id="qSleep">
+            <option value="10|Good — 7-9 hours per night">Good — 7–9 hours per night</option>
+            <option value="7|Fair — interrupted, 5-6 hours">Fair — interrupted, 5–6 hours</option>
+            <option value="4|Poor — less than 5 hours">Poor — less than 5 hours</option>
+            <option value="2|Very poor — severe insomnia">Very poor — severe insomnia</option>
+          </select>
+        </div>
+      </div>
+      <div class="gr2">
+        <div class="fg">
+          <label>Smoking / Tobacco Use</label>
+          <select id="qSmoking">
+            <option value="10|Non-smoker">Non-smoker</option>
+            <option value="7|Quit since pregnancy">Quit since pregnancy</option>
+            <option value="3|Occasional — being reduced">Occasional — being reduced</option>
+            <option value="1|Regular smoker — high risk">Regular smoker — high risk</option>
+          </select>
+        </div>
+        <div class="fg">
+          <label>Alcohol Consumption</label>
+          <select id="qAlcohol">
+            <option value="10|None — abstaining">None — abstaining</option>
+            <option value="5|Occasional — being addressed">Occasional — being addressed</option>
+            <option value="1|Regular — immediate concern">Regular — immediate concern</option>
+          </select>
+        </div>
+      </div>
+      <div class="gr2">
+        <div class="fg">
+          <label>Prenatal Care Visits</label>
+          <select id="qVisits">
+            <option value="10|Regular — on schedule">Regular — on schedule</option>
+            <option value="7|Occasional — some missed">Occasional — some missed</option>
+            <option value="4|Infrequent — needs improvement">Infrequent — needs improvement</option>
+            <option value="2|First visit — no prior care">First visit — no prior care</option>
+          </select>
+        </div>
+        <div class="fg">
+          <label>Mental Health / Mood</label>
+          <select id="qMood">
+            <option value="10|Positive and stable">Positive and stable</option>
+            <option value="7|Generally okay, some worry">Generally okay, some worry</option>
+            <option value="5|Low mood / mild depression">Low mood / mild depression</option>
+            <option value="2|Significant depression or anxiety">Significant depression or anxiety</option>
+          </select>
+        </div>
+      </div>
+      <div class="gr2">
+        <div class="fg">
+          <label>Support System at Home</label>
+          <select id="qSupport">
+            <option value="10|Strong — partner and family present">Strong — partner and family present</option>
+            <option value="7|Moderate — some support">Moderate — some support</option>
+            <option value="4|Limited — mostly alone">Limited — mostly alone</option>
+            <option value="2|None — isolated, needs referral">None — isolated, needs referral</option>
+          </select>
+        </div>
+        <div class="fg">
+          <label>Hydration</label>
+          <select id="qHydration">
+            <option value="10|Excellent — 8+ glasses daily">Excellent — 8+ glasses daily</option>
+            <option value="7|Good — 6-7 glasses">Good — 6–7 glasses</option>
+            <option value="5|Fair — 4-5 glasses">Fair — 4–5 glasses</option>
+            <option value="2|Poor — dehydration risk">Poor — dehydration risk</option>
+          </select>
+        </div>
+      </div>
+      <div style="background:var(--pinkbg);border:1px solid var(--pink2);border-radius:4px;padding:12px 14px;margin-top:4px;display:flex;align-items:center;justify-content:space-between;">
+        <div>
+          <div style="font-size:9px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--pink);margin-bottom:3px;">Pregnancy Health Score</div>
+          <div style="font-size:22px;font-weight:700;color:var(--pink);" id="pregScore">—</div>
+        </div>
+        <div style="text-align:right;">
+          <div style="font-size:9px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--pink);margin-bottom:3px;">Assessment</div>
+          <div style="font-size:13px;font-weight:600;color:var(--pink);" id="pregScoreLabel">Fill questionnaire</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- TRAUMA SECTION -->
   <div class="trauma-section card" id="traumaSection">
     <div class="card-head">
@@ -897,8 +1019,9 @@ body{font-family:'Inter',sans-serif;background:#F0F4F8;color:#1A2332;font-size:1
 <!-- REPORT OVERLAY -->
 <div class="overlay" id="reportOverlay">
   <div class="doc-actions">
-    <button class="tbtn tbtn-blue" onclick="window.print()">Print / Save PDF</button>
-    <button class="tbtn tbtn-out" style="border-color:rgba(255,255,255,0.2);color:rgba(255,255,255,0.7);" onclick="document.getElementById('reportOverlay').classList.remove('on')">Close</button>
+    <button class="tbtn tbtn-blue" onclick="window.print()">⎙ Print / Save PDF</button>
+    <button class="tbtn tbtn-out" style="border-color:rgba(255,255,255,0.3);color:#fff;" onclick="document.getElementById('reportOverlay').classList.remove('on')">✕ Close</button>
+    <span style="font-size:11px;color:rgba(255,255,255,0.45);align-self:center;margin-left:4px;">Scroll down to see full report</span>
   </div>
   <div class="doc-sheet" id="reportSheet"></div>
 </div>
@@ -911,6 +1034,7 @@ function setExam(type, el){
   document.querySelectorAll('.et').forEach(function(b){b.classList.remove('on');});
   el.classList.add('on');
   document.getElementById('pregnancySection').classList.toggle('on', type==='pregnancy');
+  document.getElementById('pregQSection').classList.toggle('on', type==='pregnancy');
   document.getElementById('traumaSection').classList.toggle('on', type==='trauma');
   document.getElementById('sExam').textContent = el.textContent;
 }
@@ -964,6 +1088,9 @@ function updateSummary(){
   document.getElementById(id).addEventListener('input', updateSummary);
   document.getElementById(id).addEventListener('change', updateSummary);
 });
+['qExercise','qDiet','qStress','qSleep','qSmoking','qAlcohol','qVisits','qMood','qSupport','qHydration'].forEach(function(id){
+  document.getElementById(id).addEventListener('change', calcPregScore);
+});
 
 function handleImages(input){
   G.images = [];
@@ -992,167 +1119,375 @@ function getInjuries(){
   return Array.from(pills).map(function(p){return p.textContent;}).join(', ') || 'None noted';
 }
 
+function calcPregScore(){
+  var ids = ['qExercise','qDiet','qStress','qSleep','qSmoking','qAlcohol','qVisits','qMood','qSupport','qHydration'];
+  var total = 0; var count = 0;
+  ids.forEach(function(id){
+    var el = document.getElementById(id);
+    if(!el || !el.value) return;
+    var score = parseInt(el.value.split('|')[0]);
+    if(!isNaN(score)){total += score; count++;}
+  });
+  if(!count){
+    document.getElementById('pregScore').textContent = '—';
+    document.getElementById('pregScoreLabel').textContent = 'Fill questionnaire';
+    G.pregScore = null; return;
+  }
+  var avg = Math.round((total/count)*10);
+  G.pregScore = avg;
+  document.getElementById('pregScore').textContent = avg+'/100';
+  var lbl = avg>=85?'Excellent Pregnancy Health':avg>=70?'Good — Minor Concerns':avg>=50?'Fair — Monitoring Needed':'Poor — Immediate Attention';
+  document.getElementById('pregScoreLabel').textContent = lbl;
+}
+
+function calcHealthScore(){
+  var scores = [];
+  var hr = document.getElementById('vHR').value;
+  var o2 = document.getElementById('vO2').value;
+  var temp = document.getElementById('vTemp').value;
+  var rr = document.getElementById('vRR').value;
+  var pain = document.getElementById('vPain').value;
+  var bp = document.getElementById('vBP').value;
+  var gcs = document.getElementById('vGCS').value;
+  var gluc = document.getElementById('vGlucose').value;
+  var statusToScore = {normal:100, warn:55, critical:20};
+  [hr,o2,temp,rr,pain,bp,gluc].forEach(function(v){
+    if(v){ var st = v.split('|')[1]; if(st && statusToScore[st]!==undefined) scores.push(statusToScore[st]); }
+  });
+  if(gcs){
+    var gcsMap = {'Alert &amp; Oriented':100,'Alert & Oriented':100,'Confused':60,'Voice Response Only':40,'Pain Response Only':20,'Unresponsive':10};
+    var gcVal = gcs.split('|')[0];
+    var gcsScore = gcsMap[gcVal] || 50;
+    scores.push(gcsScore);
+  }
+  if(!scores.length) return null;
+  return Math.round(scores.reduce(function(a,b){return a+b;},0)/scores.length);
+}
+
+function getHealthLabel(score){
+  if(score===null) return {label:'No vitals recorded',color:'#718096',bg:'#F7FAFC',border:'#E2E8F0'};
+  if(score>=85) return {label:'Excellent',          color:'#276749',bg:'#F0FFF4',border:'#9AE6B4'};
+  if(score>=70) return {label:'Good',               color:'#276749',bg:'#F0FFF4',border:'#9AE6B4'};
+  if(score>=55) return {label:'Fair — Monitor',     color:'#C05621',bg:'#FFFAF0',border:'#F6AD55'};
+  if(score>=35) return {label:'Poor — Concern',     color:'#C53030',bg:'#FFF5F5',border:'#FEB2B2'};
+  return             {label:'Critical',             color:'#C53030',bg:'#FFF5F5',border:'#FEB2B2'};
+}
+
+function buildHealthGauge(score){
+  if(score===null) return '';
+  var info = getHealthLabel(score);
+  var angle = (score/100)*180;
+  var rad   = (angle - 90) * Math.PI / 180;
+  var cx=90, cy=90, r=65;
+  var needleX = cx + r*0.75*Math.cos(rad);
+  var needleY = cy + r*0.75*Math.sin(rad);
+  var arcToRad = function(deg){ return (deg-90)*Math.PI/180; };
+  function arcPath(startDeg, endDeg, color, strokeW){
+    var s = arcToRad(startDeg), e = arcToRad(endDeg);
+    var x1=cx+r*Math.cos(s), y1=cy+r*Math.sin(s);
+    var x2=cx+r*Math.cos(e), y2=cy+r*Math.sin(e);
+    var lg = endDeg-startDeg>180?1:0;
+    return '<path d="M'+x1.toFixed(1)+' '+y1.toFixed(1)+' A'+r+' '+r+' 0 '+lg+' 1 '+x2.toFixed(1)+' '+y2.toFixed(1)+'" fill="none" stroke="'+color+'" stroke-width="'+strokeW+'" stroke-linecap="round"/>';
+  }
+  var svg = '<svg width="180" height="110" viewBox="0 0 180 110">';
+  svg += arcPath(-180,0,'#E2E8F0',10);
+  if(score>0)  svg += arcPath(-180,-180+Math.min(score,30)*1.8,'#FC8181',10);
+  if(score>30) svg += arcPath(-180+30*1.8,-180+Math.min(score,60)*1.8,'#F6AD55',10);
+  if(score>60) svg += arcPath(-180+60*1.8,-180+Math.min(score,80)*1.8,'#68D391',10);
+  if(score>80) svg += arcPath(-180+80*1.8,-180+score*1.8,'#38A169',10);
+  svg += '<line x1="'+cx+'" y1="'+cy+'" x2="'+needleX.toFixed(1)+'" y2="'+needleY.toFixed(1)+'" stroke="'+info.color+'" stroke-width="2.5" stroke-linecap="round"/>';
+  svg += '<circle cx="'+cx+'" cy="'+cy+'" r="5" fill="'+info.color+'"/>';
+  svg += '<text x="'+cx+'" y="'+(cy+16)+'" text-anchor="middle" font-size="22" font-weight="700" fill="'+info.color+'">'+score+'</text>';
+  svg += '<text x="'+cx+'" y="'+(cy+28)+'" text-anchor="middle" font-size="9" fill="#718096">/100</text>';
+  svg += '<text x="15" y="'+(cy+12)+'" font-size="8" fill="#FC8181">0</text>';
+  svg += '<text x="156" y="'+(cy+12)+'" font-size="8" fill="#38A169">100</text>';
+  svg += '</svg>';
+  return svg;
+}
+
+function autoSignature(name){
+  if(!name||name.trim()==='') return '<span style="color:#A0AEC0;font-size:13px;">___________________________</span>';
+  return '<span style="font-family:\'Dancing Script\',cursive;font-size:28px;font-weight:700;color:#1A2332;line-height:1.1;">'+name+'</span>';
+}
+
 function openReport(){
-  var now     = new Date();
-  var date    = now.toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
-  var time    = now.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'});
-  var ref     = 'PHM-'+now.getFullYear()+'-'+String(Math.floor(Math.random()*90000)+10000);
-  var name    = document.getElementById('pName').value.trim()    || 'Unknown Patient';
-  var dob     = document.getElementById('pDOB').value.trim()     || 'Not provided';
-  var pid     = document.getElementById('pID').value.trim()      || 'Not provided';
-  var sex     = document.getElementById('pSex').value            || 'Not disclosed';
-  var blood   = document.getElementById('pBlood').value          || 'Unknown';
-  var height  = document.getElementById('pHeight').value         || 'Not recorded';
-  var weight  = document.getElementById('pWeight').value.trim()  || 'Not recorded';
-  var allerg  = document.getElementById('pAllergies').value.trim()|| 'None known';
-  var ins     = document.getElementById('pInsurance').value      || 'Uninsured';
-  var emerg   = document.getElementById('pEmergency').value.trim()|| 'Not provided';
-  var reason  = document.getElementById('visitReason').value.trim()|| '—';
-  var docN    = document.getElementById('docName').value.trim()  || 'Unknown';
-  var docR    = document.getElementById('docRank').value;
-  var docB    = document.getElementById('docBadge').value.trim() || '—';
-  var dxP     = document.getElementById('dxPrimary').value.trim()   || '—';
-  var dxS     = document.getElementById('dxSecondary').value.trim() || '—';
-  var dxM     = document.getElementById('dxMeds').value.trim()      || 'None';
-  var dxF     = document.getElementById('dxFollowUp').value;
-  var dxNote  = document.getElementById('dxNotes').value.trim()     || '—';
-  var xNote   = document.getElementById('xNotes').value.trim()      || '—';
-  var statusColors = {
-    'Stable':'background:#F0FFF4;color:#276749;border:1px solid #9AE6B4;',
-    'Under Observation':'background:#FFFAF0;color:#C05621;border:1px solid #F6AD55;',
-    'Critical':'background:#FFF5F5;color:#C53030;border:1px solid #FEB2B2;',
-    'Discharged':'background:#EBF8FF;color:#2B6CB0;border:1px solid #BEE3F8;'
+  var now    = new Date();
+  var date   = now.toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+  var time   = now.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'});
+  var ref    = 'XH-'+now.getFullYear()+'-'+String(Math.floor(Math.random()*90000)+10000);
+  var name   = document.getElementById('pName').value.trim()     || 'Unknown Patient';
+  var dob    = document.getElementById('pDOB').value.trim()      || 'Not provided';
+  var pid    = document.getElementById('pID').value.trim()       || 'Not provided';
+  var sex    = document.getElementById('pSex').value             || 'Not disclosed';
+  var blood  = document.getElementById('pBlood').value           || 'Unknown';
+  var height = document.getElementById('pHeight').value          || 'Not recorded';
+  var weight = document.getElementById('pWeight').value.trim()   || 'Not recorded';
+  var allerg = document.getElementById('pAllergies').value.trim()|| 'None known';
+  var ins    = document.getElementById('pInsurance').value       || 'Uninsured';
+  var emerg  = document.getElementById('pEmergency').value.trim()|| 'Not provided';
+  var reason = document.getElementById('visitReason').value.trim()|| '—';
+  var docN   = document.getElementById('docName').value.trim()   || 'Unknown';
+  var docR   = document.getElementById('docRank').value;
+  var docB   = document.getElementById('docBadge').value.trim()  || '—';
+  var dxP    = document.getElementById('dxPrimary').value.trim()    || '—';
+  var dxS    = document.getElementById('dxSecondary').value.trim()  || '—';
+  var dxM    = document.getElementById('dxMeds').value.trim()       || 'None prescribed';
+  var dxF    = document.getElementById('dxFollowUp').value;
+  var dxNote = document.getElementById('dxNotes').value.trim()      || '—';
+  var xNote  = document.getElementById('xNotes').value.trim()       || '—';
+
+  var statusStyles = {
+    'Stable':            'background:#F0FFF4;color:#276749;border:1px solid #9AE6B4;',
+    'Under Observation': 'background:#FFFAF0;color:#C05621;border:1px solid #F6AD55;',
+    'Critical':          'background:#FFF5F5;color:#C53030;border:1px solid #FEB2B2;',
+    'Discharged':        'background:#EBF8FF;color:#2B6CB0;border:1px solid #BEE3F8;'
   };
-  var examColors = {
-    general:'#2B6CB0',pregnancy:'#97266D',trauma:'#C53030',psych:'#6B46C1',dental:'#276749'
-  };
+  var examColors = {general:'#2B6CB0',pregnancy:'#97266D',trauma:'#C53030',psych:'#6B46C1',dental:'#276749'};
+  var examLabels = {general:'General Check-Up',pregnancy:'Pregnancy / Antenatal',trauma:'Trauma Assessment',psych:'Psychological Evaluation',dental:'Dental Examination'};
   var examColor = examColors[G.examType]||'#2B6CB0';
-  var examLabel = {general:'General Check-Up',pregnancy:'Pregnancy / Antenatal',trauma:'Trauma Assessment',psych:'Psychological Evaluation',dental:'Dental Examination'}[G.examType];
+  var examLabel = examLabels[G.examType]||'General Check-Up';
 
-  var pregHtml = '';
+  var p = [];
+
+  p.push('<div style="background:#1A2332;padding:24px 32px;display:flex;align-items:center;justify-content:space-between;">');
+  p.push('<div><div style="font-family:Georgia,serif;font-size:22px;font-weight:700;color:#fff;">XOXO <span style="color:#FC8181;">Hospital</span></div>');
+  p.push('<div style="font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-top:3px;">EMS &middot; Patient Medical Report</div></div>');
+  p.push('<div style="text-align:right;"><div style="font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.4);">Report Reference</div>');
+  p.push('<div style="font-size:16px;font-weight:700;color:#FC8181;margin-top:2px;">'+ref+'</div>');
+  p.push('<div style="font-size:10px;color:rgba(255,255,255,0.4);margin-top:3px;">'+date+' &nbsp; '+time+'</div></div></div>');
+
+  p.push('<div style="background:'+examColor+';padding:8px 32px;font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:#fff;text-align:center;">'+examLabel+'</div>');
+
+  p.push('<div style="padding:24px 32px;">');
+
+  function sec(title){ return '<div style="margin-bottom:22px;"><div style="font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:#718096;border-bottom:1px solid #E2E8F0;padding-bottom:6px;margin-bottom:14px;">'+title+'</div>'; }
+  function endsec(){ return '</div>'; }
+  function row2(){ return '<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:10px;">'; }
+  function row3(){ return '<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:10px;">'; }
+  function endr(){ return '</div>'; }
+  function field(label,val){
+    return '<div style="margin-bottom:8px;"><div style="font-size:9px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#718096;margin-bottom:2px;">'+label+'</div>'
+      +'<div style="font-size:13px;color:#1A2332;font-weight:500;border-bottom:1px solid #E2E8F0;padding-bottom:4px;">'+val+'</div></div>';
+  }
+  function textfield(label,val){
+    return '<div style="margin-bottom:8px;"><div style="font-size:9px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#718096;margin-bottom:4px;">'+label+'</div>'
+      +'<div style="font-size:12px;color:#1A2332;font-weight:400;line-height:1.7;background:#F7FAFC;border:1px solid #E2E8F0;border-radius:3px;padding:10px 12px;min-height:40px;">'+val+'</div></div>';
+  }
+
+  p.push(sec('Patient Information'));
+  p.push(row3()); p.push(field('Full Name',name)); p.push(field('Date of Birth',dob)); p.push(field('Citizen ID',pid)); p.push(endr());
+  p.push(row3()); p.push(field('Sex',sex)); p.push(field('Blood Type',blood)); p.push(field('Insurance',ins)); p.push(endr());
+  p.push(row3()); p.push(field('Height',height)); p.push(field('Weight',weight)); p.push(field('Known Allergies',allerg)); p.push(endr());
+  p.push(row2()); p.push(field('Emergency Contact',emerg)); p.push(field('Reason for Visit',reason)); p.push(endr());
+  p.push(endsec());
+
+  p.push(sec('Vital Signs'));
+  p.push('<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:10px;">');
+  var vboxes = [
+    {id:'vHR',  lbl:'Heart Rate',    unit:'bpm'},
+    {id:'vBP',  lbl:'Blood Pressure',unit:'mmHg'},
+    {id:'vO2',  lbl:'O2 Saturation', unit:'%'},
+    {id:'vTemp',lbl:'Temperature',   unit:''},
+    {id:'vRR',  lbl:'Resp. Rate',    unit:'br/min'},
+    {id:'vPain',lbl:'Pain Level',    unit:'/10'},
+    {id:'vGlucose',lbl:'Glucose',    unit:'mg/dL'},
+    {id:'vGCS', lbl:'Consciousness', unit:''}
+  ];
+  vboxes.forEach(function(v){
+    var val = getV(v.id);
+    var st  = getStatus(v.id);
+    var border = st==='normal'?'#9AE6B4':st==='warn'?'#F6AD55':'#FC8181';
+    var stlbl  = st==='normal'?'Normal':st==='warn'?'Monitor':'Critical';
+    var stcol  = st==='normal'?'#276749':st==='warn'?'#C05621':'#C53030';
+    var stbg   = st==='normal'?'#F0FFF4':st==='warn'?'#FFFAF0':'#FFF5F5';
+    p.push('<div style="background:#F7FAFC;border:1px solid '+border+';border-radius:4px;padding:10px;text-align:center;">');
+    p.push('<div style="font-size:9px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#718096;margin-bottom:4px;">'+v.lbl+'</div>');
+    p.push('<div style="font-size:18px;font-weight:700;color:#1A2332;">'+val+'</div>');
+    if(v.unit) p.push('<div style="font-size:10px;color:#718096;">'+v.unit+'</div>');
+    p.push('<div style="display:inline-block;margin-top:4px;font-size:9px;font-weight:600;letter-spacing:1px;text-transform:uppercase;padding:2px 7px;border-radius:2px;background:'+stbg+';color:'+stcol+';">'+stlbl+'</div>');
+    p.push('</div>');
+  });
+  p.push('</div>');
+  p.push(endsec());
+
+  if(G.examType==='general'){
+    p.push(sec('Physical Examination Findings'));
+    p.push(row2());
+    p.push(field('Head / Neuro',document.getElementById('xHead').value));
+    p.push(field('Eyes',document.getElementById('xEyes').value));
+    p.push(endr());
+    p.push(row2());
+    p.push(field('Chest / Respiratory',document.getElementById('xChest').value));
+    p.push(field('Cardiovascular',document.getElementById('xCardio').value));
+    p.push(endr());
+    p.push(row2());
+    p.push(field('Abdomen',document.getElementById('xAbdomen').value));
+    p.push(field('Extremities',document.getElementById('xExtrem').value));
+    p.push(endr());
+    p.push(row2());
+    p.push(field('Skin / Appearance',document.getElementById('xSkin').value));
+    p.push(field('Current Medications',document.getElementById('xMeds').value||'None'));
+    p.push(endr());
+    p.push(textfield('Examination Notes',xNote));
+    p.push(endsec());
+  }
+
   if(G.examType==='pregnancy'){
-    pregHtml = '<div class="rs"><div class="rs-title">Obstetric / Pregnancy Details</div>'
-      +'<div class="r3col">'
-      +'<div class="rf"><div class="rf-l">Gestational Age</div><div class="rf-v">'+(document.getElementById('pGestAge').value||'Unknown')+'</div></div>'
-      +'<div class="rf"><div class="rf-l">No. of Babies</div><div class="rf-v">'+document.getElementById('pBabies').value+'</div></div>'
-      +'<div class="rf"><div class="rf-l">Fetal Heart Rate</div><div class="rf-v">'+(document.getElementById('pFHR').value||'Not checked')+'</div></div>'
-      +'</div>'
-      +'<div class="r3col">'
-      +'<div class="rf"><div class="rf-l">Baby Position</div><div class="rf-v">'+document.getElementById('pPosition').value+'</div></div>'
-      +'<div class="rf"><div class="rf-l">Amniotic Fluid</div><div class="rf-v">'+document.getElementById('pFluid').value+'</div></div>'
-      +'<div class="rf"><div class="rf-l">Complications</div><div class="rf-v">'+document.getElementById('pComplications').value+'</div></div>'
-      +'</div>'
-      +'<div class="rf"><div class="rf-l">OB Notes</div><div class="rf-v" style="border:none;font-size:12px;font-weight:400;line-height:1.6;">'+(document.getElementById('pNotes').value||'—')+'</div></div>'
-      +'</div>';
+    p.push(sec('Obstetric / Pregnancy Details'));
+    p.push('<div style="background:#FFF5F7;border:1px solid #FBB6CE;border-radius:3px;padding:9px 13px;margin-bottom:12px;font-size:12px;color:#97266D;font-weight:500;">Antenatal Check-Up &mdash; Confidential Patient Record</div>');
+    p.push(row3());
+    p.push(field('Gestational Age',document.getElementById('pGestAge').value||'Unknown'));
+    p.push(field('No. of Babies',document.getElementById('pBabies').value));
+    p.push(field('Pregnancy Type',document.getElementById('pPregType').value));
+    p.push(endr());
+    p.push(row3());
+    p.push(field('Fetal Heart Rate',document.getElementById('pFHR').value||'Not checked'));
+    p.push(field('Baby Position',document.getElementById('pPosition').value));
+    p.push(field('Amniotic Fluid',document.getElementById('pFluid').value));
+    p.push(endr());
+    p.push(row2());
+    p.push(field('Complications',document.getElementById('pComplications').value));
+    p.push(field('Previous Pregnancies',document.getElementById('pPrevious').value));
+    p.push(endr());
+    p.push(textfield('OB/GYN Notes',document.getElementById('pNotes').value||'—'));
+    p.push(endsec());
   }
-  var traumaHtml = '';
+
   if(G.examType==='trauma'){
-    traumaHtml = '<div class="rs"><div class="rs-title">Trauma Details</div>'
-      +'<div class="r2col">'
-      +'<div class="rf"><div class="rf-l">Mechanism</div><div class="rf-v">'+document.getElementById('tMechanism').value+'</div></div>'
-      +'<div class="rf"><div class="rf-l">Injuries Noted</div><div class="rf-v">'+getInjuries()+'</div></div>'
-      +'</div>'
-      +'<div class="r2col">'
-      +'<div class="rf"><div class="rf-l">Treatment Given</div><div class="rf-v">'+document.getElementById('tTreatment').value+'</div></div>'
-      +'<div class="rf"><div class="rf-l">Outcome</div><div class="rf-v">'+document.getElementById('tOutcome').value+'</div></div>'
-      +'</div>'
-      +'<div class="rf"><div class="rf-l">Trauma Notes</div><div class="rf-v" style="border:none;font-size:12px;font-weight:400;line-height:1.6;">'+(document.getElementById('tNotes').value||'—')+'</div></div>'
-      +'</div>';
+    p.push(sec('Trauma Assessment'));
+    p.push(row2());
+    p.push(field('Mechanism of Injury',document.getElementById('tMechanism').value));
+    p.push(field('Injuries Noted',getInjuries()));
+    p.push(endr());
+    p.push(row2());
+    p.push(field('Treatment Given',document.getElementById('tTreatment').value));
+    p.push(field('Outcome',document.getElementById('tOutcome').value));
+    p.push(endr());
+    p.push(textfield('Trauma Notes',document.getElementById('tNotes').value||'—'));
+    p.push(endsec());
   }
-  var imgHtml = '';
+
+  p.push(sec('Diagnosis &amp; Treatment Plan'));
+  p.push(row2()); p.push(field('Primary Diagnosis',dxP)); p.push(field('Secondary Diagnosis',dxS)); p.push(endr());
+  p.push(row2()); p.push(field('Medications Prescribed',dxM)); p.push(field('Follow-Up Plan',dxF)); p.push(endr());
+  p.push(textfield('Doctor Notes / Treatment Plan',dxNote));
+  p.push('<div style="margin-top:10px;"><span style="display:inline-block;font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;padding:5px 14px;border-radius:3px;'+statusStyles[G.patientStatus]+'">Patient Status: '+G.patientStatus+'</span></div>');
+  p.push(endsec());
+
   if(G.images.length){
-    imgHtml = '<div class="rs"><div class="rs-title">Medical Images ('+G.images.length+')</div>'
-      +'<div class="report-images">'+G.images.map(function(src){return '<img src="'+src+'" alt="Medical image">';}).join('')+'</div></div>';
+    p.push(sec('Medical Images ('+G.images.length+')'));
+    p.push('<div style="display:flex;flex-wrap:wrap;gap:10px;">');
+    G.images.forEach(function(src){ p.push('<img src="'+src+'" style="width:130px;height:130px;object-fit:cover;border-radius:3px;border:1px solid #E2E8F0;" alt="Medical image">'); });
+    p.push('</div>');
+    p.push(endsec());
   }
 
-  var html = ''
-  +'<div class="report-header">'
-  +'<div class="rh-left"><div class="rh-logo">XOXO Hospital <span>Medical</span></div><div class="rh-sub">EMS · Patient Medical Report</div></div>'
-  +'<div class="rh-right"><div class="rh-ref">Report Reference</div><div class="rh-num">'+ref+'</div><div class="rh-date">'+date+' &nbsp; '+time+'</div></div>'
-  +'</div>'
-  +'<div class="report-type-bar" style="background:'+examColor+';">'+examLabel.toUpperCase()+'</div>'
-  +'<div class="report-body">'
+  p.push(buildVitalsChart());
 
-  +'<div class="rs"><div class="rs-title">Patient Information</div>'
-  +'<div class="r3col">'
-  +'<div class="rf"><div class="rf-l">Full Name</div><div class="rf-v">'+name+'</div></div>'
-  +'<div class="rf"><div class="rf-l">Date of Birth</div><div class="rf-v">'+dob+'</div></div>'
-  +'<div class="rf"><div class="rf-l">Citizen ID</div><div class="rf-v">'+pid+'</div></div>'
-  +'</div>'
-  +'<div class="r3col">'
-  +'<div class="rf"><div class="rf-l">Sex</div><div class="rf-v">'+sex+'</div></div>'
-  +'<div class="rf"><div class="rf-l">Blood Type</div><div class="rf-v">'+blood+'</div></div>'
-  +'<div class="rf"><div class="rf-l">Insurance</div><div class="rf-v">'+ins+'</div></div>'
-  +'</div>'
-  +'<div class="r3col">'
-  +'<div class="rf"><div class="rf-l">Height</div><div class="rf-v">'+height+'</div></div>'
-  +'<div class="rf"><div class="rf-l">Weight</div><div class="rf-v">'+weight+'</div></div>'
-  +'<div class="rf"><div class="rf-l">Known Allergies</div><div class="rf-v">'+allerg+'</div></div>'
-  +'</div>'
-  +'<div class="r2col">'
-  +'<div class="rf"><div class="rf-l">Emergency Contact</div><div class="rf-v">'+emerg+'</div></div>'
-  +'<div class="rf"><div class="rf-l">Reason for Visit</div><div class="rf-v">'+reason+'</div></div>'
-  +'</div></div>'
+  var healthScore = calcHealthScore();
+  var healthInfo  = getHealthLabel(healthScore);
+  var gaugesvg    = buildHealthGauge(healthScore);
 
-  +'<div class="rs"><div class="rs-title">Vital Signs</div>'
-  +'<div class="vital-report-grid">'
-  +'<div class="vr-box"><div class="vr-lbl">Heart Rate</div><div class="vr-val">'+getV('vHR')+'</div><div class="vr-unit">bpm</div></div>'
-  +'<div class="vr-box"><div class="vr-lbl">Blood Pressure</div><div class="vr-val">'+getV('vBP')+'</div><div class="vr-unit">mmHg</div></div>'
-  +'<div class="vr-box"><div class="vr-lbl">O2 Saturation</div><div class="vr-val">'+getV('vO2')+'</div><div class="vr-unit">%</div></div>'
-  +'<div class="vr-box"><div class="vr-lbl">Temperature</div><div class="vr-val">'+getV('vTemp')+'</div><div class="vr-unit"></div></div>'
-  +'<div class="vr-box"><div class="vr-lbl">Resp. Rate</div><div class="vr-val">'+getV('vRR')+'</div><div class="vr-unit">br/min</div></div>'
-  +'<div class="vr-box"><div class="vr-lbl">Pain Level</div><div class="vr-val">'+getV('vPain')+'</div><div class="vr-unit">/10</div></div>'
-  +'</div></div>'
+  p.push(sec('Overall Health Score'));
+  p.push('<div style="display:grid;grid-template-columns:190px 1fr;gap:24px;align-items:center;margin-bottom:12px;">');
+  p.push('<div style="text-align:center;">'+gaugesvg+'<div style="font-size:10px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:'+healthInfo.color+';margin-top:4px;">'+healthInfo.label+'</div></div>');
+  p.push('<div>');
+  p.push('<div style="font-size:9px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#718096;margin-bottom:10px;">Score Breakdown</div>');
+  var scoreRows = [
+    {id:'vHR',  lbl:'Heart Rate'},
+    {id:'vO2',  lbl:'O2 Saturation'},
+    {id:'vTemp',lbl:'Temperature'},
+    {id:'vRR',  lbl:'Resp. Rate'},
+    {id:'vPain',lbl:'Pain Level'},
+    {id:'vBP',  lbl:'Blood Pressure'},
+    {id:'vGlucose',lbl:'Glucose'},
+    {id:'vGCS', lbl:'Consciousness'}
+  ];
+  var stMap = {normal:{col:'#276749',bg:'#F0FFF4',lbl:'Normal',pts:100},warn:{col:'#C05621',bg:'#FFFAF0',lbl:'Monitor',pts:55},critical:{col:'#C53030',bg:'#FFF5F5',lbl:'Critical',pts:20}};
+  scoreRows.forEach(function(sr){
+    var v = document.getElementById(sr.id).value;
+    if(!v) return;
+    var st = v.split('|')[1]||'normal';
+    var sm = stMap[st]||stMap.normal;
+    var barW = sm.pts;
+    p.push('<div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">');
+    p.push('<span style="font-size:11px;color:#1A2332;min-width:110px;font-weight:500;">'+sr.lbl+'</span>');
+    p.push('<div style="flex:1;height:10px;background:#F0F4F8;border-radius:3px;overflow:hidden;"><div style="height:10px;width:'+barW+'%;background:'+sm.bg.replace('F0','9A').replace('FFFAF','F6AD').replace('FFF5F','FC81')+'"></div></div>');
+    p.push('<span style="font-size:10px;font-weight:600;color:'+sm.col+';min-width:58px;text-align:right;">'+sm.lbl+' ('+barW+')</span>');
+    p.push('</div>');
+  });
+  if(healthScore!==null){
+    p.push('<div style="margin-top:10px;padding:8px 12px;background:'+healthInfo.bg+';border:1px solid '+healthInfo.border+';border-radius:3px;display:flex;justify-content:space-between;align-items:center;">');
+    p.push('<span style="font-size:11px;font-weight:600;color:'+healthInfo.color+';">Overall Score</span>');
+    p.push('<span style="font-size:18px;font-weight:700;color:'+healthInfo.color+';">'+healthScore+'/100</span>');
+    p.push('</div>');
+  }
+  p.push('</div></div>');
+  p.push(endsec());
 
-  +(G.examType==='general'?
-    '<div class="rs"><div class="rs-title">Physical Examination Findings</div>'
-    +'<div class="r2col">'
-    +'<div class="rf"><div class="rf-l">Head / Neuro</div><div class="rf-v">'+document.getElementById('xHead').value+'</div></div>'
-    +'<div class="rf"><div class="rf-l">Eyes</div><div class="rf-v">'+document.getElementById('xEyes').value+'</div></div>'
-    +'<div class="rf"><div class="rf-l">Chest / Respiratory</div><div class="rf-v">'+document.getElementById('xChest').value+'</div></div>'
-    +'<div class="rf"><div class="rf-l">Cardiovascular</div><div class="rf-v">'+document.getElementById('xCardio').value+'</div></div>'
-    +'<div class="rf"><div class="rf-l">Abdomen</div><div class="rf-v">'+document.getElementById('xAbdomen').value+'</div></div>'
-    +'<div class="rf"><div class="rf-l">Extremities</div><div class="rf-v">'+document.getElementById('xExtrem').value+'</div></div>'
-    +'</div>'
-    +'<div class="r2col">'
-    +'<div class="rf"><div class="rf-l">Skin / Appearance</div><div class="rf-v">'+document.getElementById('xSkin').value+'</div></div>'
-    +'<div class="rf"><div class="rf-l">Current Medications</div><div class="rf-v">'+(document.getElementById('xMeds').value||'None')+'</div></div>'
-    +'</div>'
-    +'<div class="rf"><div class="rf-l">Examination Notes</div><div class="rf-v" style="border:none;font-size:12px;font-weight:400;line-height:1.6;">'+xNote+'</div></div>'
-    +'</div>':'')
+  if(G.examType==='pregnancy'){
+    var qIds  = ['qExercise','qDiet','qStress','qSleep','qSmoking','qAlcohol','qVisits','qMood','qSupport','qHydration'];
+    var qLabels=['Exercise','Diet','Stress','Sleep','Smoking','Alcohol','Prenatal Visits','Mental Health','Support','Hydration'];
+    var qTotal=0,qCount=0,qRows=[];
+    qIds.forEach(function(id,i){
+      var el=document.getElementById(id);
+      if(!el||!el.value)return;
+      var parts=el.value.split('|');
+      var score=parseInt(parts[0]),label=parts[1]||'—';
+      if(!isNaN(score)){qTotal+=score;qCount++;qRows.push({label:qLabels[i],score:score,text:label});}
+    });
+    if(qRows.length){
+      var avgPreg = qCount>0?Math.round((qTotal/qCount)*10):null;
+      var pregInfo = avgPreg>=85?{col:'#97266D',bg:'#FFF5F7',lbl:'Excellent Pregnancy Health'}:avgPreg>=70?{col:'#97266D',bg:'#FFF5F7',lbl:'Good — Minor Concerns'}:avgPreg>=50?{col:'#C05621',bg:'#FFFAF0',lbl:'Fair — Monitoring Needed'}:{col:'#C53030',bg:'#FFF5F5',lbl:'Poor — Immediate Attention'};
+      p.push(sec('Pregnancy Lifestyle Assessment'));
+      p.push('<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px;">');
+      qRows.forEach(function(r){
+        var col = r.score>=8?'#276749':r.score>=6?'#C05621':'#C53030';
+        var bg  = r.score>=8?'#F0FFF4':r.score>=6?'#FFFAF0':'#FFF5F5';
+        p.push('<div style="background:#F7FAFC;border:1px solid #E2E8F0;border-radius:3px;padding:9px 11px;">');
+        p.push('<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;">');
+        p.push('<span style="font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#718096;">'+r.label+'</span>');
+        p.push('<span style="font-size:11px;font-weight:700;background:'+bg+';color:'+col+';padding:1px 8px;border-radius:2px;">'+r.score+'/10</span>');
+        p.push('</div><div style="font-size:11px;color:#1A2332;">'+r.text+'</div>');
+        p.push('<div style="height:4px;background:#E2E8F0;border-radius:2px;margin-top:6px;overflow:hidden;"><div style="height:4px;width:'+(r.score*10)+'%;background:'+col+';border-radius:2px;"></div></div>');
+        p.push('</div>');
+      });
+      p.push('</div>');
+      if(avgPreg!==null){
+        p.push('<div style="padding:12px 16px;background:'+pregInfo.bg+';border:1px solid #FBB6CE;border-radius:4px;display:flex;justify-content:space-between;align-items:center;">');
+        p.push('<div><div style="font-size:9px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:'+pregInfo.col+';margin-bottom:3px;">Pregnancy Health Score</div><div style="font-size:13px;font-weight:600;color:'+pregInfo.col+';">'+pregInfo.lbl+'</div></div>');
+        p.push('<div style="font-size:28px;font-weight:700;color:'+pregInfo.col+';">'+avgPreg+'/100</div>');
+        p.push('</div>');
+      }
+      p.push(endsec());
+    }
+  }
 
-  +pregHtml+traumaHtml
+  p.push(sec('Attending Staff &amp; Signatures'));
+  p.push('<div style="display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-top:8px;">');
+  p.push('<div>');
+  p.push('<div style="min-height:44px;display:flex;align-items:flex-end;padding-bottom:4px;border-bottom:1.5px solid #1A2332;">'+autoSignature(docN)+'</div>');
+  p.push('<div style="font-size:12px;font-weight:600;color:#1A2332;margin-top:5px;">'+docN+'</div>');
+  p.push('<div style="font-size:10px;color:#718096;margin-top:1px;">'+docR+'&nbsp;&nbsp;|&nbsp;&nbsp;Badge: '+docB+'</div>');
+  p.push('<div style="font-size:10px;color:#718096;margin-top:1px;">XOXO Hospital &middot; Los Santos</div>');
+  p.push('</div>');
+  p.push('<div>');
+  p.push('<div style="min-height:44px;display:flex;align-items:flex-end;padding-bottom:4px;border-bottom:1.5px solid #1A2332;">'+autoSignature(name)+'</div>');
+  p.push('<div style="font-size:12px;font-weight:600;color:#1A2332;margin-top:5px;">'+name+'</div>');
+  p.push('<div style="font-size:10px;color:#718096;margin-top:1px;">Patient Acknowledgement</div>');
+  p.push('<div style="font-size:10px;color:#718096;margin-top:1px;">Date: '+date+'</div>');
+  p.push('</div>');
+  p.push('</div>');
+  p.push(endsec());
 
-  +'<div class="rs"><div class="rs-title">Diagnosis &amp; Treatment Plan</div>'
-  +'<div class="r2col">'
-  +'<div class="rf"><div class="rf-l">Primary Diagnosis</div><div class="rf-v">'+dxP+'</div></div>'
-  +'<div class="rf"><div class="rf-l">Secondary Diagnosis</div><div class="rf-v">'+dxS+'</div></div>'
-  +'</div>'
-  +'<div class="r2col">'
-  +'<div class="rf"><div class="rf-l">Medications Prescribed</div><div class="rf-v">'+dxM+'</div></div>'
-  +'<div class="rf"><div class="rf-l">Follow-Up</div><div class="rf-v">'+dxF+'</div></div>'
-  +'</div>'
-  +'<div class="rf"><div class="rf-l">Doctor Notes / Plan</div><div class="rf-v" style="border:none;font-size:12px;font-weight:400;line-height:1.6;">'+dxNote+'</div></div>'
-  +'<div style="margin-top:10px;"><span class="status-badge-report" style="'+statusColors[G.patientStatus]+' font-size:11px;">Status: '+G.patientStatus+'</span></div>'
-  +'</div>'
+  p.push('</div>');
 
-  +imgHtml
+  p.push('<div style="background:#F7FAFC;border-top:1px solid #E2E8F0;padding:12px 32px;display:flex;justify-content:space-between;align-items:center;">');
+  p.push('<p style="font-size:10px;color:#718096;">'+ref+' &middot; '+date+' &middot; XOXO Hospital &middot; Los Santos</p>');
+  p.push('<p style="font-size:10px;color:#718096;">Confidential &mdash; Authorised personnel only</p>');
+  p.push('</div>');
 
-  +buildVitalsChart()
-
-  +'<div class="rs"><div class="rs-title">Attending Staff</div>'
-  +'<div class="report-sigs">'
-  +'<div class="report-sig"><div class="rs-name">'+docN+'</div><div class="rs-role">'+docR+' &nbsp; Badge: '+docB+'</div><div class="rs-role" style="margin-top:2px;font-size:10px;">XOXO Hospital</div></div>'
-  +'<div class="report-sig"><div class="rs-name">Patient Acknowledgement</div><div class="rs-role">Signed: ___________________________</div><div class="rs-role" style="margin-top:2px;font-size:10px;">Date: '+date+'</div></div>'
-  +'</div></div>'
-
-  +'</div>'
-  +'<div class="report-footer">'
-  +'<p>'+ref+' &nbsp;&middot;&nbsp; '+date+' &nbsp;&middot;&nbsp; XOXO Hospital · Los Santos</p>'
-  +'<p>This report is confidential. For authorised personnel only.</p>'
-  +'</div>';
-
-  document.getElementById('reportSheet').innerHTML = html;
+  document.getElementById('reportSheet').innerHTML = p.join('');
   document.getElementById('reportOverlay').classList.add('on');
   document.getElementById('reportOverlay').scrollTop = 0;
 }
@@ -1339,6 +1674,7 @@ function clearAll(){
   document.querySelectorAll('.et').forEach(function(b){b.classList.remove('on');});
   document.querySelector('.et[data-type="general"]').classList.add('on');
   document.getElementById('pregnancySection').classList.remove('on');
+  document.getElementById('pregQSection').classList.remove('on');
   document.getElementById('traumaSection').classList.remove('on');
   document.getElementById('iuPreviews').innerHTML='';
   document.getElementById('iuPreviews').style.display='none';
