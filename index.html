@@ -1,0 +1,1351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>XOXO Hospital · Patient Check-Up</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Inter',sans-serif;background:#F0F4F8;color:#1A2332;font-size:13px;min-height:100vh;}
+
+:root{
+  --red:#C53030;--red2:#FEB2B2;--redbg:#FFF5F5;
+  --blue:#2B6CB0;--blue2:#BEE3F8;--bluebg:#EBF8FF;
+  --green:#276749;--greenbg:#F0FFF4;--green2:#9AE6B4;
+  --pink:#97266D;--pinkbg:#FFF5F7;--pink2:#FBB6CE;
+  --ink:#1A2332;--muted:#718096;--light:#E2E8F0;--surface:#fff;
+}
+
+/* ── TOPBAR ── */
+.topbar{background:#1A2332;padding:0 24px;height:54px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+.hospital-logo{display:flex;align-items:center;gap:10px;}
+.logo-cross{width:28px;height:28px;background:var(--red);border-radius:3px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.logo-cross::before{content:'';width:5px;height:20px;background:#fff;border-radius:2px;}
+.logo-cross::after{content:'';position:absolute;width:20px;height:5px;background:#fff;border-radius:2px;}
+.logo-cross{position:relative;}
+.logo-text{color:#fff;}
+.logo-name{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;line-height:1;}
+.logo-sub{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-top:2px;}
+.topbar-actions{display:flex;gap:8px;}
+.tbtn{font-family:'Inter',sans-serif;font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;padding:8px 16px;border-radius:3px;cursor:pointer;border:none;transition:all 0.15s;}
+.tbtn-out{background:transparent;border:1px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.65);}
+.tbtn-out:hover{border-color:rgba(255,255,255,0.5);color:#fff;}
+.tbtn-red{background:var(--red);color:#fff;}
+.tbtn-red:hover{background:#9B2C2C;}
+.tbtn-blue{background:var(--blue);color:#fff;}
+.tbtn-blue:hover{background:#2C5282;}
+
+/* ── LAYOUT ── */
+.layout{display:grid;grid-template-columns:1fr 320px;gap:16px;padding:20px 24px;align-items:start;}
+.form-col{display:flex;flex-direction:column;gap:14px;}
+.sidebar{display:flex;flex-direction:column;gap:14px;}
+
+/* ── CARDS ── */
+.card{background:var(--surface);border:1px solid var(--light);border-radius:6px;overflow:hidden;}
+.card-head{padding:10px 16px;border-bottom:1px solid var(--light);display:flex;align-items:center;gap:8px;}
+.ch-icon{width:22px;height:22px;border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0;}
+.card-head h3{font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink);}
+.card-body{padding:16px;display:flex;flex-direction:column;gap:12px;}
+
+/* ── FORM ── */
+.fg{display:flex;flex-direction:column;gap:4px;}
+.fg label{font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--muted);}
+.fg input,.fg select,.fg textarea{background:#F7FAFC;border:1px solid var(--light);border-radius:3px;color:var(--ink);font-family:'Inter',sans-serif;font-size:13px;padding:8px 10px;outline:none;transition:border-color 0.15s;width:100%;}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--blue);background:#fff;}
+.fg select option{background:#fff;}
+.fg textarea{resize:vertical;min-height:60px;line-height:1.5;}
+.fg-note{font-size:10px;color:var(--muted);margin-top:2px;}
+.gr2{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.gr3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;}
+.gr4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px;}
+
+/* ── VITALS DISPLAY ── */
+.vital-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+.vital-box{background:#F7FAFC;border:1px solid var(--light);border-radius:4px;padding:10px 12px;text-align:center;}
+.vb-label{font-size:9px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:4px;}
+.vb-val{font-size:18px;font-weight:600;color:var(--ink);}
+.vb-unit{font-size:10px;color:var(--muted);margin-top:1px;}
+.vb-status{display:inline-block;font-size:9px;font-weight:600;letter-spacing:1px;text-transform:uppercase;padding:2px 7px;border-radius:2px;margin-top:4px;}
+.status-normal{background:var(--greenbg);color:var(--green);}
+.status-warn{background:#FFFAF0;color:#C05621;}
+.status-critical{background:var(--redbg);color:var(--red);}
+
+/* ── EXAM TYPE TABS ── */
+.exam-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:4px;}
+.et{background:#F7FAFC;border:1px solid var(--light);border-radius:3px;padding:7px 14px;font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;cursor:pointer;color:var(--muted);transition:all 0.15s;}
+.et:hover{color:var(--ink);}
+.et.on{color:#fff;border-color:transparent;}
+.et[data-type="general"].on{background:#2B6CB0;}
+.et[data-type="pregnancy"].on{background:#97266D;}
+.et[data-type="trauma"].on{background:#C53030;}
+.et[data-type="psych"].on{background:#6B46C1;}
+.et[data-type="dental"].on{background:#276749;}
+
+/* ── IMAGE UPLOAD ── */
+.img-upload{border:2px dashed var(--light);border-radius:4px;background:#F7FAFC;cursor:pointer;transition:border-color 0.15s;position:relative;overflow:hidden;}
+.img-upload:hover{border-color:var(--blue);}
+.img-upload input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;z-index:2;}
+.iu-inner{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;padding:18px;pointer-events:none;}
+.iu-icon{font-size:24px;opacity:0.4;}
+.iu-text{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);}
+.iu-previews{display:flex;flex-wrap:wrap;gap:6px;padding:10px;}
+.iu-prev-img{width:70px;height:70px;object-fit:cover;border-radius:3px;border:1px solid var(--light);}
+
+/* ── STATUS SELECT ── */
+.status-row{display:flex;gap:6px;flex-wrap:wrap;}
+.stb{flex:1;min-width:80px;background:#F7FAFC;border:1px solid var(--light);border-radius:3px;padding:7px 4px;font-family:'Inter',sans-serif;font-size:9px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--muted);cursor:pointer;transition:all 0.15s;text-align:center;}
+.stb.on.stable{background:var(--greenbg);border-color:var(--green);color:var(--green);}
+.stb.on.obs{background:#FFFAF0;border-color:#DD6B20;color:#C05621;}
+.stb.on.critical{background:var(--redbg);border-color:var(--red);color:var(--red);}
+.stb.on.discharged{background:var(--bluebg);border-color:var(--blue);color:var(--blue);}
+
+/* ── PREGNANCY SECTION ── */
+.preg-section{display:none;}
+.preg-section.on{display:block;}
+.preg-banner{background:var(--pinkbg);border:1px solid var(--pink2);border-radius:4px;padding:10px 14px;display:flex;align-items:center;gap:8px;margin-bottom:12px;}
+.preg-banner p{font-size:12px;color:var(--pink);font-weight:500;}
+
+/* ── TRAUMA SECTION ── */
+.trauma-section{display:none;}
+.trauma-section.on{display:block;}
+.body-diagram{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px;}
+.body-region{background:#F7FAFC;border:1px solid var(--light);border-radius:3px;padding:8px 10px;}
+.br-label{font-size:9px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:5px;}
+.br-checks{display:flex;flex-wrap:wrap;gap:4px;}
+.inj-pill{font-size:9px;background:#fff;border:1px solid var(--light);border-radius:2px;padding:2px 7px;cursor:pointer;color:var(--muted);transition:all 0.12s;}
+.inj-pill.on{background:var(--redbg);border-color:var(--red);color:var(--red);}
+
+/* ── SIDEBAR SUMMARY ── */
+.sum-plate{background:var(--surface);border:1px solid var(--light);border-radius:6px;overflow:hidden;}
+.sum-head{background:#1A2332;padding:12px 16px;}
+.sum-head h2{font-size:13px;font-weight:600;color:#fff;}
+.sum-head p{font-size:10px;color:rgba(255,255,255,0.4);margin-top:2px;letter-spacing:1px;text-transform:uppercase;}
+.sum-body{padding:14px 16px;display:flex;flex-direction:column;gap:10px;}
+.sum-row{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid #F0F4F8;}
+.sum-row:last-child{border-bottom:none;}
+.sum-row .sl{font-size:11px;color:var(--muted);}
+.sum-row .sv{font-size:12px;font-weight:500;color:var(--ink);}
+.sum-total{border-top:1px solid var(--light);padding-top:10px;margin-top:4px;}
+.sum-total .sl{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--ink);}
+.sum-total .sv{font-size:16px;font-weight:600;color:var(--ink);}
+
+/* ── DOCTOR SIG ── */
+.sig-area{border-top:1px solid var(--light);padding:10px 16px;background:#F7FAFC;}
+.sig-label{font-size:9px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:5px;}
+.sig-line{font-size:11px;color:var(--ink);}
+
+/* ── WEBHOOK BAR ── */
+.wh-card{background:var(--surface);border:1px solid var(--light);border-radius:6px;padding:14px;}
+.wh-card h3{font-size:10px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:10px;}
+.wh-card input{background:#F7FAFC;border:1px solid var(--light);border-radius:3px;color:var(--ink);font-family:'Inter',sans-serif;font-size:12px;padding:8px 10px;outline:none;width:100%;margin-bottom:8px;}
+.wh-card input:focus{border-color:var(--blue);}
+.wh-status{font-size:11px;font-weight:500;margin-top:6px;min-height:14px;}
+.wh-status.ok{color:var(--green);}
+.wh-status.err{color:var(--red);}
+.wh-status.wait{color:var(--muted);}
+
+/* ── DOC OVERLAY ── */
+.overlay{display:none;position:fixed;inset:0;background:rgba(26,35,50,0.82);z-index:300;overflow-y:auto;padding:24px 16px;}
+.overlay.on{display:block;}
+.doc-sheet{background:#fff;max-width:720px;margin:0 auto;border-radius:4px;overflow:hidden;font-family:'Inter',sans-serif;}
+.doc-actions{display:flex;gap:8px;max-width:720px;margin:0 auto 10px;}
+
+.report-header{background:#1A2332;padding:24px 32px;display:flex;align-items:center;justify-content:space-between;}
+.rh-left{}
+.rh-logo{font-family:'Playfair Display',serif;font-size:20px;color:#fff;}
+.rh-logo span{color:#FC8181;}
+.rh-sub{font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-top:2px;}
+.rh-right{text-align:right;}
+.rh-ref{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.4);}
+.rh-num{font-size:15px;font-weight:600;color:#FC8181;margin-top:2px;}
+.rh-date{font-size:10px;color:rgba(255,255,255,0.4);margin-top:4px;}
+
+.report-type-bar{padding:8px 32px;font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:#fff;text-align:center;}
+
+.report-body{padding:24px 32px;}
+.rs{margin-bottom:20px;}
+.rs-title{font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--light);padding-bottom:6px;margin-bottom:12px;}
+.r2col{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.r3col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;}
+.rf{margin-bottom:8px;}
+.rf-l{font-size:9px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:2px;}
+.rf-v{font-size:13px;color:var(--ink);font-weight:500;border-bottom:1px solid var(--light);padding-bottom:3px;}
+.vital-report-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+.vr-box{background:#F7FAFC;border:1px solid var(--light);border-radius:3px;padding:10px;text-align:center;}
+.vr-lbl{font-size:9px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:3px;}
+.vr-val{font-size:16px;font-weight:600;color:var(--ink);}
+.vr-unit{font-size:10px;color:var(--muted);}
+.report-images{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px;}
+.report-images img{width:120px;height:120px;object-fit:cover;border-radius:3px;border:1px solid var(--light);}
+.report-sigs{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:8px;}
+.report-sig{border-top:1px solid var(--ink);padding-top:6px;}
+.report-sig .rs-name{font-size:13px;font-weight:500;color:var(--ink);}
+.report-sig .rs-role{font-size:10px;color:var(--muted);margin-top:2px;}
+.report-footer{background:#F7FAFC;border-top:1px solid var(--light);padding:12px 32px;display:flex;justify-content:space-between;align-items:center;}
+.report-footer p{font-size:10px;color:var(--muted);}
+.status-badge-report{display:inline-block;font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;padding:4px 12px;border-radius:2px;}
+
+@media print{
+  .overlay{position:static;background:none;padding:0;}
+  .doc-sheet{border-radius:0;max-width:100%;}
+  .doc-actions{display:none!important;}
+  body>*:not(.overlay){display:none!important;}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="hospital-logo">
+    <div class="logo-cross"></div>
+    <div class="logo-text">
+      <div class="logo-name">XOXO Hospital</div>
+      <div class="logo-sub">EMS Patient Check-Up System</div>
+    </div>
+  </div>
+  <div class="topbar-actions">
+    <button class="tbtn tbtn-out" onclick="openReport()">Export Report</button>
+    <button class="tbtn tbtn-red" onclick="clearAll()">New Patient</button>
+  </div>
+</div>
+
+<div class="layout">
+<div class="form-col">
+
+  <!-- EXAM TYPE -->
+  <div class="card">
+    <div class="card-head">
+      <div class="ch-icon" style="background:#EBF8FF;">🩺</div>
+      <h3>Examination Type</h3>
+    </div>
+    <div class="card-body" style="padding-bottom:14px;">
+      <div class="exam-tabs">
+        <button class="et on" data-type="general" onclick="setExam('general',this)">General Check-Up</button>
+        <button class="et" data-type="pregnancy" onclick="setExam('pregnancy',this)">Pregnancy</button>
+        <button class="et" data-type="trauma" onclick="setExam('trauma',this)">Trauma / Injury</button>
+        <button class="et" data-type="psych" onclick="setExam('psych',this)">Psychological</button>
+        <button class="et" data-type="dental" onclick="setExam('dental',this)">Dental</button>
+      </div>
+      <div class="fg">
+        <label>Reason for Visit</label>
+        <textarea id="visitReason" placeholder="Brief description of why the patient came in..."></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- PATIENT INFO -->
+  <div class="card">
+    <div class="card-head">
+      <div class="ch-icon" style="background:#EBF8FF;">👤</div>
+      <h3>Patient Information</h3>
+    </div>
+    <div class="card-body">
+      <div class="gr3">
+        <div class="fg"><label>Full Name</label><input id="pName" type="text" placeholder="First Last"></div>
+        <div class="fg"><label>Date of Birth</label><input id="pDOB" type="text" placeholder="DD/MM/YYYY"></div>
+        <div class="fg"><label>Citizen ID</label><input id="pID" type="text" placeholder="e.g. #304827"></div>
+      </div>
+      <div class="gr4">
+        <div class="fg">
+          <label>Sex</label>
+          <select id="pSex">
+            <option value="">Select</option>
+            <option>Male</option>
+            <option>Female</option>
+            <option>Non-binary</option>
+            <option>Not disclosed</option>
+          </select>
+        </div>
+        <div class="fg">
+          <label>Blood Type</label>
+          <select id="pBlood">
+            <option value="">Unknown</option>
+            <option>A+</option><option>A-</option>
+            <option>B+</option><option>B-</option>
+            <option>AB+</option><option>AB-</option>
+            <option>O+</option><option>O-</option>
+          </select>
+        </div>
+        <div class="fg">
+          <label>Height</label>
+          <select id="pHeight">
+            <option value="">Select</option>
+            <option>4'10" / 147cm</option><option>4'11" / 150cm</option>
+            <option>5'0" / 152cm</option><option>5'1" / 155cm</option>
+            <option>5'2" / 157cm</option><option>5'3" / 160cm</option>
+            <option>5'4" / 163cm</option><option>5'5" / 165cm</option>
+            <option>5'6" / 168cm</option><option>5'7" / 170cm</option>
+            <option>5'8" / 173cm</option><option>5'9" / 175cm</option>
+            <option>5'10" / 178cm</option><option>5'11" / 180cm</option>
+            <option>6'0" / 183cm</option><option>6'1" / 185cm</option>
+            <option>6'2" / 188cm</option><option>6'3" / 191cm</option>
+            <option>6'4" / 193cm</option><option>6'5" / 196cm</option>
+          </select>
+        </div>
+        <div class="fg"><label>Weight (lbs / kg)</label><input id="pWeight" type="text" placeholder="e.g. 165 lbs"></div>
+      </div>
+      <div class="gr3">
+        <div class="fg">
+          <label>Insurance / Employer</label>
+          <select id="pInsurance">
+            <option>Uninsured</option>
+            <option>LSPD</option><option>EMS</option><option>LSFD</option>
+            <option>Government</option><option>Private</option><option>Other</option>
+          </select>
+        </div>
+        <div class="fg"><label>Emergency Contact</label><input id="pEmergency" type="text" placeholder="Name & number"></div>
+        <div class="fg"><label>Known Allergies</label><input id="pAllergies" type="text" placeholder="None / list here"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- VITALS -->
+  <div class="card">
+    <div class="card-head">
+      <div class="ch-icon" style="background:#FFF5F5;">❤️</div>
+      <h3>Vital Signs</h3>
+    </div>
+    <div class="card-body">
+      <div class="gr4">
+        <div class="fg">
+          <label>Heart Rate (bpm)</label>
+          <select id="vHR" onchange="updateVitals()">
+            <option value="">—</option>
+            <option value="38|critical">38 — Critical Low</option>
+            <option value="45|warn">45 — Low</option>
+            <option value="55|warn">55 — Below Normal</option>
+            <option value="62|normal">62 — Normal</option>
+            <option value="72|normal">72 — Normal</option>
+            <option value="80|normal">80 — Normal</option>
+            <option value="90|normal">90 — Normal</option>
+            <option value="100|normal">100 — High Normal</option>
+            <option value="110|warn">110 — Elevated</option>
+            <option value="130|warn">130 — High</option>
+            <option value="150|critical">150 — Critical High</option>
+            <option value="180|critical">180 — Dangerous</option>
+          </select>
+        </div>
+        <div class="fg">
+          <label>Blood Pressure</label>
+          <select id="vBP" onchange="updateVitals()">
+            <option value="">—</option>
+            <option value="80/50|critical">80/50 — Critical Low</option>
+            <option value="90/60|warn">90/60 — Low</option>
+            <option value="110/70|normal">110/70 — Normal</option>
+            <option value="120/80|normal">120/80 — Normal</option>
+            <option value="130/85|normal">130/85 — Normal</option>
+            <option value="140/90|warn">140/90 — Pre-High</option>
+            <option value="160/100|warn">160/100 — High</option>
+            <option value="180/110|critical">180/110 — Crisis</option>
+          </select>
+        </div>
+        <div class="fg">
+          <label>O2 Saturation (%)</label>
+          <select id="vO2" onchange="updateVitals()">
+            <option value="">—</option>
+            <option value="78|critical">78% — Critical</option>
+            <option value="85|critical">85% — Severe Low</option>
+            <option value="90|warn">90% — Below Normal</option>
+            <option value="94|warn">94% — Low</option>
+            <option value="96|normal">96% — Normal</option>
+            <option value="98|normal">98% — Normal</option>
+            <option value="99|normal">99% — Normal</option>
+            <option value="100|normal">100% — Excellent</option>
+          </select>
+        </div>
+        <div class="fg">
+          <label>Temperature</label>
+          <select id="vTemp" onchange="updateVitals()">
+            <option value="">—</option>
+            <option value="95.0°F|critical">95.0°F — Hypothermia</option>
+            <option value="97.0°F|warn">97.0°F — Low</option>
+            <option value="98.6°F|normal">98.6°F — Normal</option>
+            <option value="99.1°F|normal">99.1°F — Normal</option>
+            <option value="100.4°F|warn">100.4°F — Low Fever</option>
+            <option value="101.5°F|warn">101.5°F — Fever</option>
+            <option value="103.0°F|critical">103.0°F — High Fever</option>
+            <option value="105.0°F|critical">105.0°F — Critical</option>
+          </select>
+        </div>
+      </div>
+      <div class="gr4">
+        <div class="fg">
+          <label>Resp. Rate (br/min)</label>
+          <select id="vRR" onchange="updateVitals()">
+            <option value="">—</option>
+            <option value="6|critical">6 — Critical Low</option>
+            <option value="10|warn">10 — Low</option>
+            <option value="14|normal">14 — Normal</option>
+            <option value="16|normal">16 — Normal</option>
+            <option value="18|normal">18 — Normal</option>
+            <option value="22|warn">22 — Slightly High</option>
+            <option value="26|warn">26 — Elevated</option>
+            <option value="30|critical">30 — Critical High</option>
+          </select>
+        </div>
+        <div class="fg">
+          <label>Pain Level (0–10)</label>
+          <select id="vPain" onchange="updateVitals()">
+            <option value="">—</option>
+            <option value="0|normal">0 — No Pain</option>
+            <option value="1|normal">1 — Minimal</option>
+            <option value="2|normal">2 — Mild</option>
+            <option value="3|normal">3 — Mild</option>
+            <option value="4|warn">4 — Moderate</option>
+            <option value="5|warn">5 — Moderate</option>
+            <option value="6|warn">6 — Moderate-Severe</option>
+            <option value="7|warn">7 — Severe</option>
+            <option value="8|critical">8 — Very Severe</option>
+            <option value="9|critical">9 — Extreme</option>
+            <option value="10|critical">10 — Worst Possible</option>
+          </select>
+        </div>
+        <div class="fg">
+          <label>Blood Glucose</label>
+          <select id="vGlucose" onchange="updateVitals()">
+            <option value="">—</option>
+            <option value="55 mg/dL|critical">55 — Hypoglycemic</option>
+            <option value="70 mg/dL|warn">70 — Low</option>
+            <option value="90 mg/dL|normal">90 — Normal</option>
+            <option value="100 mg/dL|normal">100 — Normal</option>
+            <option value="120 mg/dL|normal">120 — Normal</option>
+            <option value="140 mg/dL|warn">140 — Pre-Diabetic</option>
+            <option value="180 mg/dL|warn">180 — High</option>
+            <option value="250 mg/dL|critical">250 — Hyperglycemic</option>
+          </select>
+        </div>
+        <div class="fg">
+          <label>Consciousness</label>
+          <select id="vGCS" onchange="updateVitals()">
+            <option value="">—</option>
+            <option value="Alert &amp; Oriented|normal">Alert & Oriented</option>
+            <option value="Confused|warn">Confused</option>
+            <option value="Voice Response Only|warn">Voice Response Only</option>
+            <option value="Pain Response Only|critical">Pain Response Only</option>
+            <option value="Unresponsive|critical">Unresponsive</option>
+          </select>
+        </div>
+      </div>
+      <div id="vitalsDisplay" class="vital-grid" style="display:none;margin-top:4px;"></div>
+    </div>
+  </div>
+
+  <!-- GENERAL EXAM SECTION -->
+  <div class="card" id="generalSection">
+    <div class="card-head">
+      <div class="ch-icon" style="background:#EBF8FF;">📋</div>
+      <h3>Physical Examination</h3>
+    </div>
+    <div class="card-body">
+      <div class="gr2">
+        <div class="fg">
+          <label>Head / Neuro</label>
+          <select id="xHead">
+            <option>Normal — No abnormalities</option>
+            <option>Headache reported</option>
+            <option>Dizziness / Vertigo</option>
+            <option>Concussion suspected</option>
+            <option>Skull fracture suspected</option>
+            <option>Laceration present</option>
+          </select>
+        </div>
+        <div class="fg">
+          <label>Eyes</label>
+          <select id="xEyes">
+            <option>Normal — Pupils equal, reactive</option>
+            <option>Left pupil dilated</option>
+            <option>Right pupil dilated</option>
+            <option>Both pupils dilated</option>
+            <option>Bloodshot / Irritated</option>
+            <option>Vision impairment reported</option>
+          </select>
+        </div>
+      </div>
+      <div class="gr2">
+        <div class="fg">
+          <label>Chest / Respiratory</label>
+          <select id="xChest">
+            <option>Clear — Normal breath sounds</option>
+            <option>Wheezing present</option>
+            <option>Diminished breath sounds</option>
+            <option>Chest pain reported</option>
+            <option>Rib tenderness / fracture</option>
+            <option>Pneumothorax suspected</option>
+          </select>
+        </div>
+        <div class="fg">
+          <label>Cardiovascular</label>
+          <select id="xCardio">
+            <option>Normal rhythm</option>
+            <option>Irregular heartbeat</option>
+            <option>Tachycardia</option>
+            <option>Bradycardia</option>
+            <option>Chest pain — cardiac suspected</option>
+            <option>Cardiac arrest — resuscitated</option>
+          </select>
+        </div>
+      </div>
+      <div class="gr2">
+        <div class="fg">
+          <label>Abdomen</label>
+          <select id="xAbdomen">
+            <option>Soft — Non-tender</option>
+            <option>Tenderness present</option>
+            <option>Guarding / Rigidity</option>
+            <option>Distension noted</option>
+            <option>GSW / Penetrating trauma</option>
+            <option>Internal bleeding suspected</option>
+          </select>
+        </div>
+        <div class="fg">
+          <label>Extremities</label>
+          <select id="xExtrem">
+            <option>Normal — Full range of motion</option>
+            <option>Fracture — Left arm</option>
+            <option>Fracture — Right arm</option>
+            <option>Fracture — Left leg</option>
+            <option>Fracture — Right leg</option>
+            <option>Laceration / Wound present</option>
+            <option>Swelling / Bruising noted</option>
+          </select>
+        </div>
+      </div>
+      <div class="gr2">
+        <div class="fg">
+          <label>Skin / Appearance</label>
+          <select id="xSkin">
+            <option>Normal — Healthy color, warm</option>
+            <option>Pale / Diaphoretic</option>
+            <option>Cyanotic</option>
+            <option>Jaundiced</option>
+            <option>Burns present</option>
+            <option>Rash / Irritation noted</option>
+          </select>
+        </div>
+        <div class="fg">
+          <label>Current Medications</label>
+          <input id="xMeds" type="text" placeholder="None / list medications">
+        </div>
+      </div>
+      <div class="fg">
+        <label>Examination Notes</label>
+        <textarea id="xNotes" placeholder="Additional findings, observations, patient history..."></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- PREGNANCY SECTION -->
+  <div class="preg-section card" id="pregnancySection">
+    <div class="card-head">
+      <div class="ch-icon" style="background:var(--pinkbg);">🌸</div>
+      <h3>Pregnancy Examination</h3>
+    </div>
+    <div class="card-body">
+      <div class="preg-banner">
+        <p>Obstetric / Antenatal Check-Up — All information is confidential and protected.</p>
+      </div>
+      <div class="gr3">
+        <div class="fg">
+          <label>Gestational Age</label>
+          <select id="pGestAge">
+            <option value="">Unknown</option>
+            <option>4 weeks (1st trimester)</option><option>6 weeks</option>
+            <option>8 weeks</option><option>10 weeks</option>
+            <option>12 weeks (End T1)</option><option>14 weeks (2nd trimester)</option>
+            <option>16 weeks</option><option>18 weeks</option>
+            <option>20 weeks — Anatomy scan</option>
+            <option>22 weeks</option><option>24 weeks</option>
+            <option>26 weeks</option><option>28 weeks (3rd trimester)</option>
+            <option>30 weeks</option><option>32 weeks</option>
+            <option>34 weeks</option><option>36 weeks</option>
+            <option>38 weeks</option><option>40 weeks — Full term</option>
+          </select>
+        </div>
+        <div class="fg">
+          <label>Number of Babies</label>
+          <select id="pBabies">
+            <option>Single (1)</option>
+            <option>Twins (2)</option>
+            <option>Triplets (3)</option>
+          </select>
+        </div>
+        <div class="fg">
+          <label>Pregnancy Type</label>
+          <select id="pPregType">
+            <option>Natural conception</option>
+            <option>IVF</option>
+            <option>Surrogate</option>
+            <option>Unknown</option>
+          </select>
+        </div>
+      </div>
+      <div class="gr3">
+        <div class="fg">
+          <label>Fetal Heart Rate</label>
+          <select id="pFHR">
+            <option value="">Not checked</option>
+            <option value="100 bpm — Low, monitoring required">100 bpm — Low</option>
+            <option value="120 bpm — Normal range">120 bpm — Normal</option>
+            <option value="140 bpm — Normal range">140 bpm — Normal</option>
+            <option value="155 bpm — Normal range">155 bpm — Normal</option>
+            <option value="170 bpm — Upper normal">170 bpm — Upper Normal</option>
+            <option value="180 bpm — Elevated, review">180 bpm — Elevated</option>
+          </select>
+        </div>
+        <div class="fg">
+          <label>Baby Position</label>
+          <select id="pPosition">
+            <option>Not assessed yet</option>
+            <option>Cephalic — Head down (normal)</option>
+            <option>Breech — Bottom / feet first</option>
+            <option>Transverse — Sideways</option>
+            <option>Oblique — Diagonal</option>
+          </select>
+        </div>
+        <div class="fg">
+          <label>Amniotic Fluid</label>
+          <select id="pFluid">
+            <option>Normal</option>
+            <option>Low (Oligohydramnios)</option>
+            <option>High (Polyhydramnios)</option>
+            <option>Not assessed</option>
+          </select>
+        </div>
+      </div>
+      <div class="gr2">
+        <div class="fg">
+          <label>Complications / Flags</label>
+          <select id="pComplications">
+            <option>None — Healthy pregnancy</option>
+            <option>Gestational diabetes</option>
+            <option>Pre-eclampsia signs</option>
+            <option>Preterm labour signs</option>
+            <option>Low placenta (Placenta Previa)</option>
+            <option>Ectopic pregnancy — URGENT</option>
+            <option>Miscarriage risk</option>
+            <option>High blood pressure</option>
+          </select>
+        </div>
+        <div class="fg">
+          <label>Previous Pregnancies</label>
+          <select id="pPrevious">
+            <option>First pregnancy (Primigravida)</option>
+            <option>1 previous pregnancy</option>
+            <option>2 previous pregnancies</option>
+            <option>3+ previous pregnancies</option>
+            <option>Previous C-section</option>
+            <option>Previous miscarriage</option>
+          </select>
+        </div>
+      </div>
+      <div class="fg">
+        <label>OB/GYN Notes</label>
+        <textarea id="pNotes" placeholder="Prenatal observations, recommendations, next appointment..."></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- TRAUMA SECTION -->
+  <div class="trauma-section card" id="traumaSection">
+    <div class="card-head">
+      <div class="ch-icon" style="background:var(--redbg);">🚨</div>
+      <h3>Trauma Assessment</h3>
+    </div>
+    <div class="card-body">
+      <div class="fg" style="margin-bottom:4px;"><label>Injury Mechanism</label>
+        <select id="tMechanism">
+          <option>GSW — Gunshot wound</option>
+          <option>Stabbing / Puncture wound</option>
+          <option>MVC — Motor vehicle collision</option>
+          <option>Fall from height</option>
+          <option>Blunt force trauma</option>
+          <option>Explosion / Blast injury</option>
+          <option>Burns — Thermal</option>
+          <option>Drowning / Near-drowning</option>
+          <option>Assault — Blunt</option>
+          <option>Other / Unknown</option>
+        </select>
+      </div>
+      <div class="body-diagram">
+        <div class="body-region">
+          <div class="br-label">Head &amp; Neck</div>
+          <div class="br-checks">
+            <span class="inj-pill" onclick="this.classList.toggle('on')">Laceration</span>
+            <span class="inj-pill" onclick="this.classList.toggle('on')">GSW</span>
+            <span class="inj-pill" onclick="this.classList.toggle('on')">Fracture</span>
+            <span class="inj-pill" onclick="this.classList.toggle('on')">Bruising</span>
+            <span class="inj-pill" onclick="this.classList.toggle('on')">Swelling</span>
+          </div>
+        </div>
+        <div class="body-region">
+          <div class="br-label">Chest &amp; Back</div>
+          <div class="br-checks">
+            <span class="inj-pill" onclick="this.classList.toggle('on')">GSW</span>
+            <span class="inj-pill" onclick="this.classList.toggle('on')">Rib fracture</span>
+            <span class="inj-pill" onclick="this.classList.toggle('on')">Stab wound</span>
+            <span class="inj-pill" onclick="this.classList.toggle('on')">Bruising</span>
+            <span class="inj-pill" onclick="this.classList.toggle('on')">Burns</span>
+          </div>
+        </div>
+        <div class="body-region">
+          <div class="br-label">Abdomen</div>
+          <div class="br-checks">
+            <span class="inj-pill" onclick="this.classList.toggle('on')">GSW</span>
+            <span class="inj-pill" onclick="this.classList.toggle('on')">Stab wound</span>
+            <span class="inj-pill" onclick="this.classList.toggle('on')">Blunt trauma</span>
+            <span class="inj-pill" onclick="this.classList.toggle('on')">Internal bleed</span>
+          </div>
+        </div>
+        <div class="body-region">
+          <div class="br-label">Arms &amp; Legs</div>
+          <div class="br-checks">
+            <span class="inj-pill" onclick="this.classList.toggle('on')">L arm fracture</span>
+            <span class="inj-pill" onclick="this.classList.toggle('on')">R arm fracture</span>
+            <span class="inj-pill" onclick="this.classList.toggle('on')">L leg fracture</span>
+            <span class="inj-pill" onclick="this.classList.toggle('on')">R leg fracture</span>
+            <span class="inj-pill" onclick="this.classList.toggle('on')">Lacerations</span>
+          </div>
+        </div>
+      </div>
+      <div class="gr2">
+        <div class="fg">
+          <label>Treatment Given</label>
+          <select id="tTreatment">
+            <option>Wound cleaned and dressed</option>
+            <option>Stitches / Sutures applied</option>
+            <option>Splint / Immobilisation</option>
+            <option>CPR performed</option>
+            <option>IV fluids administered</option>
+            <option>Oxygen therapy</option>
+            <option>Transfusion required</option>
+            <option>Surgery required — admitted</option>
+            <option>Pain management — meds given</option>
+          </select>
+        </div>
+        <div class="fg">
+          <label>Outcome</label>
+          <select id="tOutcome">
+            <option>Treated and discharged</option>
+            <option>Admitted for observation</option>
+            <option>Transferred to ICU</option>
+            <option>Referred to surgery</option>
+            <option>Declined treatment</option>
+            <option>Deceased on arrival</option>
+          </select>
+        </div>
+      </div>
+      <div class="fg">
+        <label>Trauma Notes</label>
+        <textarea id="tNotes" placeholder="Scene details, mechanism description, treatment timeline..."></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- DIAGNOSIS -->
+  <div class="card">
+    <div class="card-head">
+      <div class="ch-icon" style="background:#F0FFF4;">📝</div>
+      <h3>Diagnosis &amp; Plan</h3>
+    </div>
+    <div class="card-body">
+      <div class="gr2">
+        <div class="fg">
+          <label>Primary Diagnosis</label>
+          <input id="dxPrimary" type="text" placeholder="Primary diagnosis or findings">
+        </div>
+        <div class="fg">
+          <label>Secondary Diagnosis</label>
+          <input id="dxSecondary" type="text" placeholder="Additional diagnosis (optional)">
+        </div>
+      </div>
+      <div class="gr2">
+        <div class="fg">
+          <label>Medications Prescribed</label>
+          <input id="dxMeds" type="text" placeholder="Drug name, dose, frequency">
+        </div>
+        <div class="fg">
+          <label>Follow-Up</label>
+          <select id="dxFollowUp">
+            <option>No follow-up required</option>
+            <option>Follow up in 1 week</option>
+            <option>Follow up in 2 weeks</option>
+            <option>Follow up in 1 month</option>
+            <option>Referred to specialist</option>
+            <option>Admitted — inpatient care</option>
+          </select>
+        </div>
+      </div>
+      <div class="fg">
+        <label>Doctor's Notes / Treatment Plan</label>
+        <textarea id="dxNotes" placeholder="Full treatment plan, special instructions, discharge advice..."></textarea>
+      </div>
+      <div class="fg">
+        <label>Patient Status</label>
+        <div class="status-row">
+          <button class="stb stable on" onclick="setStat('Stable',this)">Stable</button>
+          <button class="stb obs" onclick="setStat('Under Observation',this)">Observation</button>
+          <button class="stb critical" onclick="setStat('Critical',this)">Critical</button>
+          <button class="stb discharged" onclick="setStat('Discharged',this)">Discharged</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- IMAGES -->
+  <div class="card">
+    <div class="card-head">
+      <div class="ch-icon" style="background:#FAFAF0;">📷</div>
+      <h3>Medical Images <span style="font-size:9px;font-weight:400;color:var(--muted);text-transform:none;letter-spacing:0;">— optional</span></h3>
+    </div>
+    <div class="card-body">
+      <div class="img-upload" id="imgUpload" onclick="document.getElementById('imgFiles').click()">
+        <input type="file" id="imgFiles" accept="image/*" multiple onclick="event.stopPropagation()" onchange="handleImages(this)">
+        <div class="iu-inner" id="iuPlaceholder">
+          <div class="iu-icon">🖼</div>
+          <div class="iu-text">Click to upload X-rays, wounds, scans...</div>
+        </div>
+        <div class="iu-previews" id="iuPreviews" style="display:none;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ATTENDING STAFF -->
+  <div class="card">
+    <div class="card-head">
+      <div class="ch-icon" style="background:#FFF5F5;">👨‍⚕️</div>
+      <h3>Attending Staff</h3>
+    </div>
+    <div class="card-body">
+      <div class="gr3">
+        <div class="fg"><label>Doctor / Medic Name</label><input id="docName" type="text" placeholder="Dr. / EMT Name"></div>
+        <div class="fg">
+          <label>Staff Rank</label>
+          <select id="docRank">
+            <option>EMS Trainee</option>
+            <option>EMT</option>
+            <option>Paramedic</option>
+            <option>Nurse</option>
+            <option>Resident Doctor</option>
+            <option>Attending Doctor</option>
+            <option>Senior Doctor</option>
+            <option>Chief of Medicine</option>
+          </select>
+        </div>
+        <div class="fg"><label>Badge / License #</label><input id="docBadge" type="text" placeholder="#EMS-001"></div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /form-col -->
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+  <div class="sum-plate">
+    <div class="sum-head">
+      <h2>Report Summary</h2>
+      <p>Live preview</p>
+    </div>
+    <div class="sum-body">
+      <div class="sum-row"><span class="sl">Patient</span><span class="sv" id="sPat">—</span></div>
+      <div class="sum-row"><span class="sl">Exam Type</span><span class="sv" id="sExam">General Check-Up</span></div>
+      <div class="sum-row"><span class="sl">Blood Type</span><span class="sv" id="sBlood">—</span></div>
+      <div class="sum-row"><span class="sl">Heart Rate</span><span class="sv" id="sHR">—</span></div>
+      <div class="sum-row"><span class="sl">Blood Pressure</span><span class="sv" id="sBP">—</span></div>
+      <div class="sum-row"><span class="sl">O2 Sat</span><span class="sv" id="sO2">—</span></div>
+      <div class="sum-row"><span class="sl">Temperature</span><span class="sv" id="sTemp">—</span></div>
+      <div class="sum-row"><span class="sl">Pain Level</span><span class="sv" id="sPain">—</span></div>
+      <div class="sum-row"><span class="sl">Status</span><span class="sv" id="sStatus">Stable</span></div>
+      <div class="sum-row"><span class="sl">Attending</span><span class="sv" id="sDoc">—</span></div>
+    </div>
+    <div class="sig-area">
+      <div class="sig-label">Attending Signature</div>
+      <div class="sig-line" id="sigLine">—</div>
+    </div>
+  </div>
+
+  <div class="wh-card">
+    <h3>Send to Discord</h3>
+    <input id="whUrl" type="text" placeholder="Webhook URL..." value="https://discord.com/api/webhooks/1491115181302878362/qQYxce4E4qA0aZbN0kJL9EwjcBOHfBUCHarDMpr0a-Rg_WBj36sphiwBawpl209qWm7r">
+    <button class="tbtn tbtn-blue" style="width:100%" id="whBtn" onclick="sendWebhook()">Send Report Summary</button>
+    <div class="wh-status" id="whStatus"></div>
+  </div>
+
+  <div style="background:var(--surface);border:1px solid var(--light);border-radius:6px;padding:14px;">
+    <div style="font-size:10px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:10px;">Quick Actions</div>
+    <div style="display:flex;flex-direction:column;gap:6px;">
+      <button class="tbtn tbtn-blue" style="width:100%;justify-content:center;" onclick="openReport()">Export Full Report</button>
+      <button class="tbtn tbtn-out" style="width:100%;justify-content:center;color:var(--ink);border-color:var(--light);" onclick="window.print()">Print Report</button>
+      <button class="tbtn tbtn-out" style="width:100%;justify-content:center;color:var(--red);border-color:rgba(197,48,48,0.2);" onclick="clearAll()">Clear / New Patient</button>
+    </div>
+  </div>
+
+  <div style="background:var(--redbg);border:1px solid var(--red2);border-radius:6px;padding:12px;">
+    <div style="font-size:10px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--red);margin-bottom:6px;">Emergency Numbers</div>
+    <div style="font-size:12px;color:#742A2A;line-height:1.8;">
+      EMS Dispatch: <strong>911</strong><br>
+      XOXO Hospital: <strong>555-0100</strong><br>
+      Poison Control: <strong>555-0101</strong><br>
+      LSPD: <strong>555-0911</strong>
+    </div>
+  </div>
+</div>
+
+</div><!-- /layout -->
+
+<!-- REPORT OVERLAY -->
+<div class="overlay" id="reportOverlay">
+  <div class="doc-actions">
+    <button class="tbtn tbtn-blue" onclick="window.print()">Print / Save PDF</button>
+    <button class="tbtn tbtn-out" style="border-color:rgba(255,255,255,0.2);color:rgba(255,255,255,0.7);" onclick="document.getElementById('reportOverlay').classList.remove('on')">Close</button>
+  </div>
+  <div class="doc-sheet" id="reportSheet"></div>
+</div>
+
+<script>
+var G = {examType:'general', patientStatus:'Stable', images:[]};
+
+function setExam(type, el){
+  G.examType = type;
+  document.querySelectorAll('.et').forEach(function(b){b.classList.remove('on');});
+  el.classList.add('on');
+  document.getElementById('pregnancySection').classList.toggle('on', type==='pregnancy');
+  document.getElementById('traumaSection').classList.toggle('on', type==='trauma');
+  document.getElementById('sExam').textContent = el.textContent;
+}
+
+function setStat(val, el){
+  G.patientStatus = val;
+  document.querySelectorAll('.stb').forEach(function(b){b.classList.remove('on');});
+  el.classList.add('on');
+  document.getElementById('sStatus').textContent = val;
+}
+
+function getV(id){ var v=document.getElementById(id).value; return v?v.split('|')[0]:'—'; }
+function getStatus(id){ var v=document.getElementById(id).value; return v?v.split('|')[1]:'normal'; }
+
+function updateVitals(){
+  var vitals = [
+    {id:'vHR',label:'Heart Rate',unit:'bpm'},
+    {id:'vBP',label:'Blood Pressure',unit:'mmHg'},
+    {id:'vO2',label:'O2 Saturation',unit:'%'},
+    {id:'vTemp',label:'Temperature',unit:''},
+    {id:'vRR',label:'Resp. Rate',unit:'br/min'},
+    {id:'vPain',label:'Pain Level',unit:'/10'},
+  ];
+  var hasAny = vitals.some(function(v){return document.getElementById(v.id).value;});
+  var disp = document.getElementById('vitalsDisplay');
+  disp.style.display = hasAny ? 'grid' : 'none';
+  disp.innerHTML = vitals.filter(function(v){return document.getElementById(v.id).value;}).map(function(v){
+    var val = getV(v.id), st = getStatus(v.id);
+    var cls = st==='normal'?'status-normal':st==='warn'?'status-warn':'status-critical';
+    var lbl = st==='normal'?'Normal':st==='warn'?'Monitor':'Critical';
+    return '<div class="vital-box"><div class="vb-label">'+v.label+'</div><div class="vb-val">'+val+'</div><div class="vb-unit">'+v.unit+'</div><span class="vb-status '+cls+'">'+lbl+'</span></div>';
+  }).join('');
+  updateSummary();
+}
+
+function updateSummary(){
+  var name = document.getElementById('pName').value.trim();
+  var doc  = document.getElementById('docName').value.trim();
+  document.getElementById('sPat').textContent     = name||'—';
+  document.getElementById('sBlood').textContent   = document.getElementById('pBlood').value||'—';
+  document.getElementById('sHR').textContent      = getV('vHR');
+  document.getElementById('sBP').textContent      = getV('vBP');
+  document.getElementById('sO2').textContent      = getV('vO2');
+  document.getElementById('sTemp').textContent    = getV('vTemp');
+  document.getElementById('sPain').textContent    = getV('vPain');
+  document.getElementById('sDoc').textContent     = doc||'—';
+  document.getElementById('sigLine').textContent  = doc ? doc+' · '+document.getElementById('docRank').value : '—';
+}
+
+['pName','pBlood','docName','docRank'].forEach(function(id){
+  document.getElementById(id).addEventListener('input', updateSummary);
+  document.getElementById(id).addEventListener('change', updateSummary);
+});
+
+function handleImages(input){
+  G.images = [];
+  var prev = document.getElementById('iuPreviews');
+  var ph   = document.getElementById('iuPlaceholder');
+  prev.innerHTML = '';
+  Array.from(input.files).forEach(function(file){
+    var r = new FileReader();
+    r.onload = function(e){
+      G.images.push(e.target.result);
+      var img = document.createElement('img');
+      img.src = e.target.result;
+      img.className = 'iu-prev-img';
+      prev.appendChild(img);
+    };
+    r.readAsDataURL(file);
+  });
+  if(input.files.length){
+    prev.style.display = 'flex';
+    ph.style.display = 'none';
+  }
+}
+
+function getInjuries(){
+  var pills = document.querySelectorAll('.inj-pill.on');
+  return Array.from(pills).map(function(p){return p.textContent;}).join(', ') || 'None noted';
+}
+
+function openReport(){
+  var now     = new Date();
+  var date    = now.toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+  var time    = now.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'});
+  var ref     = 'PHM-'+now.getFullYear()+'-'+String(Math.floor(Math.random()*90000)+10000);
+  var name    = document.getElementById('pName').value.trim()    || 'Unknown Patient';
+  var dob     = document.getElementById('pDOB').value.trim()     || 'Not provided';
+  var pid     = document.getElementById('pID').value.trim()      || 'Not provided';
+  var sex     = document.getElementById('pSex').value            || 'Not disclosed';
+  var blood   = document.getElementById('pBlood').value          || 'Unknown';
+  var height  = document.getElementById('pHeight').value         || 'Not recorded';
+  var weight  = document.getElementById('pWeight').value.trim()  || 'Not recorded';
+  var allerg  = document.getElementById('pAllergies').value.trim()|| 'None known';
+  var ins     = document.getElementById('pInsurance').value      || 'Uninsured';
+  var emerg   = document.getElementById('pEmergency').value.trim()|| 'Not provided';
+  var reason  = document.getElementById('visitReason').value.trim()|| '—';
+  var docN    = document.getElementById('docName').value.trim()  || 'Unknown';
+  var docR    = document.getElementById('docRank').value;
+  var docB    = document.getElementById('docBadge').value.trim() || '—';
+  var dxP     = document.getElementById('dxPrimary').value.trim()   || '—';
+  var dxS     = document.getElementById('dxSecondary').value.trim() || '—';
+  var dxM     = document.getElementById('dxMeds').value.trim()      || 'None';
+  var dxF     = document.getElementById('dxFollowUp').value;
+  var dxNote  = document.getElementById('dxNotes').value.trim()     || '—';
+  var xNote   = document.getElementById('xNotes').value.trim()      || '—';
+  var statusColors = {
+    'Stable':'background:#F0FFF4;color:#276749;border:1px solid #9AE6B4;',
+    'Under Observation':'background:#FFFAF0;color:#C05621;border:1px solid #F6AD55;',
+    'Critical':'background:#FFF5F5;color:#C53030;border:1px solid #FEB2B2;',
+    'Discharged':'background:#EBF8FF;color:#2B6CB0;border:1px solid #BEE3F8;'
+  };
+  var examColors = {
+    general:'#2B6CB0',pregnancy:'#97266D',trauma:'#C53030',psych:'#6B46C1',dental:'#276749'
+  };
+  var examColor = examColors[G.examType]||'#2B6CB0';
+  var examLabel = {general:'General Check-Up',pregnancy:'Pregnancy / Antenatal',trauma:'Trauma Assessment',psych:'Psychological Evaluation',dental:'Dental Examination'}[G.examType];
+
+  var pregHtml = '';
+  if(G.examType==='pregnancy'){
+    pregHtml = '<div class="rs"><div class="rs-title">Obstetric / Pregnancy Details</div>'
+      +'<div class="r3col">'
+      +'<div class="rf"><div class="rf-l">Gestational Age</div><div class="rf-v">'+(document.getElementById('pGestAge').value||'Unknown')+'</div></div>'
+      +'<div class="rf"><div class="rf-l">No. of Babies</div><div class="rf-v">'+document.getElementById('pBabies').value+'</div></div>'
+      +'<div class="rf"><div class="rf-l">Fetal Heart Rate</div><div class="rf-v">'+(document.getElementById('pFHR').value||'Not checked')+'</div></div>'
+      +'</div>'
+      +'<div class="r3col">'
+      +'<div class="rf"><div class="rf-l">Baby Position</div><div class="rf-v">'+document.getElementById('pPosition').value+'</div></div>'
+      +'<div class="rf"><div class="rf-l">Amniotic Fluid</div><div class="rf-v">'+document.getElementById('pFluid').value+'</div></div>'
+      +'<div class="rf"><div class="rf-l">Complications</div><div class="rf-v">'+document.getElementById('pComplications').value+'</div></div>'
+      +'</div>'
+      +'<div class="rf"><div class="rf-l">OB Notes</div><div class="rf-v" style="border:none;font-size:12px;font-weight:400;line-height:1.6;">'+(document.getElementById('pNotes').value||'—')+'</div></div>'
+      +'</div>';
+  }
+  var traumaHtml = '';
+  if(G.examType==='trauma'){
+    traumaHtml = '<div class="rs"><div class="rs-title">Trauma Details</div>'
+      +'<div class="r2col">'
+      +'<div class="rf"><div class="rf-l">Mechanism</div><div class="rf-v">'+document.getElementById('tMechanism').value+'</div></div>'
+      +'<div class="rf"><div class="rf-l">Injuries Noted</div><div class="rf-v">'+getInjuries()+'</div></div>'
+      +'</div>'
+      +'<div class="r2col">'
+      +'<div class="rf"><div class="rf-l">Treatment Given</div><div class="rf-v">'+document.getElementById('tTreatment').value+'</div></div>'
+      +'<div class="rf"><div class="rf-l">Outcome</div><div class="rf-v">'+document.getElementById('tOutcome').value+'</div></div>'
+      +'</div>'
+      +'<div class="rf"><div class="rf-l">Trauma Notes</div><div class="rf-v" style="border:none;font-size:12px;font-weight:400;line-height:1.6;">'+(document.getElementById('tNotes').value||'—')+'</div></div>'
+      +'</div>';
+  }
+  var imgHtml = '';
+  if(G.images.length){
+    imgHtml = '<div class="rs"><div class="rs-title">Medical Images ('+G.images.length+')</div>'
+      +'<div class="report-images">'+G.images.map(function(src){return '<img src="'+src+'" alt="Medical image">';}).join('')+'</div></div>';
+  }
+
+  var html = ''
+  +'<div class="report-header">'
+  +'<div class="rh-left"><div class="rh-logo">XOXO Hospital <span>Medical</span></div><div class="rh-sub">EMS · Patient Medical Report</div></div>'
+  +'<div class="rh-right"><div class="rh-ref">Report Reference</div><div class="rh-num">'+ref+'</div><div class="rh-date">'+date+' &nbsp; '+time+'</div></div>'
+  +'</div>'
+  +'<div class="report-type-bar" style="background:'+examColor+';">'+examLabel.toUpperCase()+'</div>'
+  +'<div class="report-body">'
+
+  +'<div class="rs"><div class="rs-title">Patient Information</div>'
+  +'<div class="r3col">'
+  +'<div class="rf"><div class="rf-l">Full Name</div><div class="rf-v">'+name+'</div></div>'
+  +'<div class="rf"><div class="rf-l">Date of Birth</div><div class="rf-v">'+dob+'</div></div>'
+  +'<div class="rf"><div class="rf-l">Citizen ID</div><div class="rf-v">'+pid+'</div></div>'
+  +'</div>'
+  +'<div class="r3col">'
+  +'<div class="rf"><div class="rf-l">Sex</div><div class="rf-v">'+sex+'</div></div>'
+  +'<div class="rf"><div class="rf-l">Blood Type</div><div class="rf-v">'+blood+'</div></div>'
+  +'<div class="rf"><div class="rf-l">Insurance</div><div class="rf-v">'+ins+'</div></div>'
+  +'</div>'
+  +'<div class="r3col">'
+  +'<div class="rf"><div class="rf-l">Height</div><div class="rf-v">'+height+'</div></div>'
+  +'<div class="rf"><div class="rf-l">Weight</div><div class="rf-v">'+weight+'</div></div>'
+  +'<div class="rf"><div class="rf-l">Known Allergies</div><div class="rf-v">'+allerg+'</div></div>'
+  +'</div>'
+  +'<div class="r2col">'
+  +'<div class="rf"><div class="rf-l">Emergency Contact</div><div class="rf-v">'+emerg+'</div></div>'
+  +'<div class="rf"><div class="rf-l">Reason for Visit</div><div class="rf-v">'+reason+'</div></div>'
+  +'</div></div>'
+
+  +'<div class="rs"><div class="rs-title">Vital Signs</div>'
+  +'<div class="vital-report-grid">'
+  +'<div class="vr-box"><div class="vr-lbl">Heart Rate</div><div class="vr-val">'+getV('vHR')+'</div><div class="vr-unit">bpm</div></div>'
+  +'<div class="vr-box"><div class="vr-lbl">Blood Pressure</div><div class="vr-val">'+getV('vBP')+'</div><div class="vr-unit">mmHg</div></div>'
+  +'<div class="vr-box"><div class="vr-lbl">O2 Saturation</div><div class="vr-val">'+getV('vO2')+'</div><div class="vr-unit">%</div></div>'
+  +'<div class="vr-box"><div class="vr-lbl">Temperature</div><div class="vr-val">'+getV('vTemp')+'</div><div class="vr-unit"></div></div>'
+  +'<div class="vr-box"><div class="vr-lbl">Resp. Rate</div><div class="vr-val">'+getV('vRR')+'</div><div class="vr-unit">br/min</div></div>'
+  +'<div class="vr-box"><div class="vr-lbl">Pain Level</div><div class="vr-val">'+getV('vPain')+'</div><div class="vr-unit">/10</div></div>'
+  +'</div></div>'
+
+  +(G.examType==='general'?
+    '<div class="rs"><div class="rs-title">Physical Examination Findings</div>'
+    +'<div class="r2col">'
+    +'<div class="rf"><div class="rf-l">Head / Neuro</div><div class="rf-v">'+document.getElementById('xHead').value+'</div></div>'
+    +'<div class="rf"><div class="rf-l">Eyes</div><div class="rf-v">'+document.getElementById('xEyes').value+'</div></div>'
+    +'<div class="rf"><div class="rf-l">Chest / Respiratory</div><div class="rf-v">'+document.getElementById('xChest').value+'</div></div>'
+    +'<div class="rf"><div class="rf-l">Cardiovascular</div><div class="rf-v">'+document.getElementById('xCardio').value+'</div></div>'
+    +'<div class="rf"><div class="rf-l">Abdomen</div><div class="rf-v">'+document.getElementById('xAbdomen').value+'</div></div>'
+    +'<div class="rf"><div class="rf-l">Extremities</div><div class="rf-v">'+document.getElementById('xExtrem').value+'</div></div>'
+    +'</div>'
+    +'<div class="r2col">'
+    +'<div class="rf"><div class="rf-l">Skin / Appearance</div><div class="rf-v">'+document.getElementById('xSkin').value+'</div></div>'
+    +'<div class="rf"><div class="rf-l">Current Medications</div><div class="rf-v">'+(document.getElementById('xMeds').value||'None')+'</div></div>'
+    +'</div>'
+    +'<div class="rf"><div class="rf-l">Examination Notes</div><div class="rf-v" style="border:none;font-size:12px;font-weight:400;line-height:1.6;">'+xNote+'</div></div>'
+    +'</div>':'')
+
+  +pregHtml+traumaHtml
+
+  +'<div class="rs"><div class="rs-title">Diagnosis &amp; Treatment Plan</div>'
+  +'<div class="r2col">'
+  +'<div class="rf"><div class="rf-l">Primary Diagnosis</div><div class="rf-v">'+dxP+'</div></div>'
+  +'<div class="rf"><div class="rf-l">Secondary Diagnosis</div><div class="rf-v">'+dxS+'</div></div>'
+  +'</div>'
+  +'<div class="r2col">'
+  +'<div class="rf"><div class="rf-l">Medications Prescribed</div><div class="rf-v">'+dxM+'</div></div>'
+  +'<div class="rf"><div class="rf-l">Follow-Up</div><div class="rf-v">'+dxF+'</div></div>'
+  +'</div>'
+  +'<div class="rf"><div class="rf-l">Doctor Notes / Plan</div><div class="rf-v" style="border:none;font-size:12px;font-weight:400;line-height:1.6;">'+dxNote+'</div></div>'
+  +'<div style="margin-top:10px;"><span class="status-badge-report" style="'+statusColors[G.patientStatus]+' font-size:11px;">Status: '+G.patientStatus+'</span></div>'
+  +'</div>'
+
+  +imgHtml
+
+  +buildVitalsChart()
+
+  +'<div class="rs"><div class="rs-title">Attending Staff</div>'
+  +'<div class="report-sigs">'
+  +'<div class="report-sig"><div class="rs-name">'+docN+'</div><div class="rs-role">'+docR+' &nbsp; Badge: '+docB+'</div><div class="rs-role" style="margin-top:2px;font-size:10px;">XOXO Hospital</div></div>'
+  +'<div class="report-sig"><div class="rs-name">Patient Acknowledgement</div><div class="rs-role">Signed: ___________________________</div><div class="rs-role" style="margin-top:2px;font-size:10px;">Date: '+date+'</div></div>'
+  +'</div></div>'
+
+  +'</div>'
+  +'<div class="report-footer">'
+  +'<p>'+ref+' &nbsp;&middot;&nbsp; '+date+' &nbsp;&middot;&nbsp; XOXO Hospital · Los Santos</p>'
+  +'<p>This report is confidential. For authorised personnel only.</p>'
+  +'</div>';
+
+  document.getElementById('reportSheet').innerHTML = html;
+  document.getElementById('reportOverlay').classList.add('on');
+  document.getElementById('reportOverlay').scrollTop = 0;
+}
+
+function buildVitalsChart(){
+  var vitDefs = [
+    {id:'vHR',   label:'Heart Rate',    unit:'bpm',  min:0,  max:200, normal:[60,100],   warn:[40,140]},
+    {id:'vO2',   label:'O2 Sat',        unit:'%',    min:70, max:100, normal:[95,100],   warn:[90,95]},
+    {id:'vTemp', label:'Temperature',   unit:'°F',   min:94, max:107, normal:[97.5,99.5],warn:[96,100.4],isText:true},
+    {id:'vRR',   label:'Resp Rate',     unit:'br/m', min:0,  max:40,  normal:[12,20],    warn:[8,24]},
+    {id:'vPain', label:'Pain',          unit:'/10',  min:0,  max:10,  normal:[0,3],      warn:[3,7]},
+    {id:'vGlucose',label:'Glucose',     unit:'mg/dL',min:40, max:300, normal:[70,140],   warn:[55,180]}
+  ];
+  var rows = [];
+  vitDefs.forEach(function(v){
+    var raw = document.getElementById(v.id).value;
+    if(!raw) return;
+    var val = raw.split('|')[0];
+    var st  = raw.split('|')[1]||'normal';
+    var num = parseFloat(val);
+    if(isNaN(num)) return;
+    var pct = Math.max(0,Math.min(100,((num-v.min)/(v.max-v.min))*100));
+    var color = st==='normal'?'#276749':st==='warn'?'#C05621':'#C53030';
+    var bgBar = st==='normal'?'#9AE6B4':st==='warn'?'#F6AD55':'#FC8181';
+    var normalPctStart = Math.max(0,((v.normal[0]-v.min)/(v.max-v.min))*100);
+    var normalPctEnd   = Math.min(100,((v.normal[1]-v.min)/(v.max-v.min))*100);
+    rows.push({label:v.label,unit:v.unit,val:val,num:num,pct:pct,color:color,bgBar:bgBar,st:st,min:v.min,max:v.max,normalPctStart:normalPctStart,normalPctEnd:normalPctEnd});
+  });
+  if(!rows.length) return '';
+
+  var bpRaw = document.getElementById('vBP').value;
+  var bpVal = bpRaw ? bpRaw.split('|')[0] : null;
+  var bpSt  = bpRaw ? bpRaw.split('|')[1] : 'normal';
+  var gcRaw = document.getElementById('vGCS').value;
+  var gcVal = gcRaw ? gcRaw.split('|')[0] : null;
+
+  var bars = rows.map(function(r){
+    var stLabel = r.st==='normal'?'Normal':r.st==='warn'?'Elevated':'Critical';
+    return '<div style="margin-bottom:14px;">'
+      +'<div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px;">'
+      +'<span style="font-size:11px;font-weight:600;color:#1A2332;">'+r.label+'</span>'
+      +'<div style="display:flex;align-items:center;gap:8px;">'
+      +'<span style="font-size:16px;font-weight:700;color:'+r.color+';">'+r.val+'<span style="font-size:10px;font-weight:400;color:#718096;margin-left:2px;">'+r.unit+'</span></span>'
+      +'<span style="font-size:9px;font-weight:600;letter-spacing:1px;text-transform:uppercase;padding:2px 8px;border-radius:2px;background:'+(r.st==='normal'?'#F0FFF4':r.st==='warn'?'#FFFAF0':'#FFF5F5')+';color:'+r.color+';">'+stLabel+'</span>'
+      +'</div></div>'
+      +'<div style="position:relative;height:16px;background:#F0F4F8;border-radius:3px;overflow:hidden;">'
+      +'<div style="position:absolute;left:'+r.normalPctStart+'%;width:'+(r.normalPctEnd-r.normalPctStart)+'%;height:100%;background:#C6F6D5;border-radius:0;" title="Normal range"></div>'
+      +'<div style="position:absolute;left:0;width:'+r.pct+'%;height:100%;background:'+r.bgBar+';border-radius:3px 0 0 3px;transition:width 0.3s;"></div>'
+      +'<div style="position:absolute;left:'+r.pct+'%;top:0;width:2px;height:100%;background:'+r.color+';border-radius:1px;transform:translateX(-1px);"></div>'
+      +'</div>'
+      +'<div style="display:flex;justify-content:space-between;margin-top:2px;">'
+      +'<span style="font-size:9px;color:#A0AEC0;">'+r.min+' '+r.unit+'</span>'
+      +'<span style="font-size:9px;color:#48BB78;">Normal: '+document.getElementById('v'+r.label.replace(/[^a-zA-Z]/g,'')).value.split('|')[0]+'</span>'
+      +'<span style="font-size:9px;color:#A0AEC0;">'+r.max+' '+r.unit+'</span>'
+      +'</div>'
+      +'</div>';
+  });
+
+  var counts = {normal:0,warn:0,critical:0};
+  rows.forEach(function(r){counts[r.st]=(counts[r.st]||0)+1;});
+  var totalChecked = rows.length + (bpVal?1:0) + (gcVal?1:0);
+  var scoreColor = counts.critical>0?'#C53030':counts.warn>1?'#C05621':'#276749';
+  var scoreBg    = counts.critical>0?'#FFF5F5':counts.warn>1?'#FFFAF0':'#F0FFF4';
+  var scoreLabel = counts.critical>0?'Critical Concern':counts.warn>1?'Needs Monitoring':'Overall Good';
+
+  var spiderPoints = (function(){
+    var items = [
+      {label:'Heart',r:rows.find(function(r){return r.label==='Heart Rate';})},
+      {label:'O2',   r:rows.find(function(r){return r.label==='O2 Sat';})},
+      {label:'Resp', r:rows.find(function(r){return r.label==='Resp Rate';})},
+      {label:'Pain', r:rows.find(function(r){return r.label==='Pain';})},
+      {label:'Temp', r:rows.find(function(r){return r.label==='Temperature';})},
+      {label:'Gluc', r:rows.find(function(r){return r.label==='Glucose';})},
+    ];
+    var cx=90,cy=90,radius=65;
+    var n=items.length;
+    var svgLines='',svgPolygon='',svgLabels='',polyPts=[];
+    for(var i=0;i<n;i++){
+      var angle=(Math.PI*2/n)*i - Math.PI/2;
+      var ox=cx+radius*Math.cos(angle), oy=cy+radius*Math.sin(angle);
+      svgLines+='<line x1="'+cx+'" y1="'+cy+'" x2="'+ox.toFixed(1)+'" y2="'+oy.toFixed(1)+'" stroke="#E2E8F0" stroke-width="1"/>';
+      var lx=cx+(radius+14)*Math.cos(angle), ly=cy+(radius+14)*Math.sin(angle);
+      svgLabels+='<text x="'+lx.toFixed(1)+'" y="'+ly.toFixed(1)+'" text-anchor="middle" dominant-baseline="middle" font-size="9" fill="#718096">'+items[i].label+'</text>';
+      var pct = items[i].r ? items[i].r.pct/100 : 0;
+      var normPct = items[i].r ? ((items[i].r.normalPctStart+items[i].r.normalPctEnd)/2)/100 : 0.5;
+      var score = 1 - Math.abs(pct - normPct)*2;
+      score = Math.max(0.1, Math.min(1, score));
+      var r2=radius*score;
+      polyPts.push((cx+r2*Math.cos(angle)).toFixed(1)+','+(cy+r2*Math.sin(angle)).toFixed(1));
+    }
+    for(var r3=0.25;r3<=1;r3+=0.25){
+      var rpts=[];
+      for(var i2=0;i2<n;i2++){var a=(Math.PI*2/n)*i2-Math.PI/2;rpts.push((cx+radius*r3*Math.cos(a)).toFixed(1)+','+(cy+radius*r3*Math.sin(a)).toFixed(1));}
+      svgLines+='<polygon points="'+rpts.join(' ')+'" fill="none" stroke="#E2E8F0" stroke-width="0.5"/>';
+    }
+    svgPolygon='<polygon points="'+polyPts.join(' ')+'" fill="rgba(43,108,176,0.18)" stroke="#2B6CB0" stroke-width="1.5"/>';
+    return '<svg width="180" height="180" viewBox="0 0 180 180">'+svgLines+svgPolygon+svgLabels+'</svg>';
+  })();
+
+  return '<div class="rs"><div class="rs-title">Vitals Data Sheet &amp; Chart Analysis</div>'
+
+    +'<div style="display:grid;grid-template-columns:1fr 190px;gap:20px;align-items:start;">'
+
+    +'<div>'
+    +'<div style="font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#718096;margin-bottom:10px;">Measurement Bars — green zone = normal range</div>'
+    +bars.join('')
+    +(bpVal?'<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-top:1px solid #E2E8F0;"><span style="font-size:11px;font-weight:600;color:#1A2332;">Blood Pressure</span><div style="display:flex;align-items:center;gap:8px;"><span style="font-size:16px;font-weight:700;color:'+(bpSt==='normal'?'#276749':bpSt==='warn'?'#C05621':'#C53030')+';">'+bpVal+'<span style="font-size:10px;font-weight:400;color:#718096;margin-left:2px;">mmHg</span></span></div></div>':'')
+    +(gcVal?'<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-top:1px solid #E2E8F0;"><span style="font-size:11px;font-weight:600;color:#1A2332;">Consciousness</span><span style="font-size:13px;font-weight:500;color:#1A2332;">'+gcVal+'</span></div>':'')
+    +'</div>'
+
+    +'<div style="text-align:center;">'
+    +'<div style="font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#718096;margin-bottom:8px;">Vitals Radar</div>'
+    +spiderPoints
+    +'<div style="margin-top:8px;padding:10px 12px;background:'+scoreBg+';border-radius:4px;border:1px solid '+(counts.critical>0?'#FEB2B2':counts.warn>1?'#F6AD55':'#9AE6B4')+';text-align:center;">'
+    +'<div style="font-size:9px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#718096;margin-bottom:3px;">Overall Assessment</div>'
+    +'<div style="font-size:15px;font-weight:700;color:'+scoreColor+';">'+scoreLabel+'</div>'
+    +'<div style="font-size:10px;color:#718096;margin-top:2px;">'+totalChecked+' metrics recorded</div>'
+    +'<div style="display:flex;justify-content:center;gap:10px;margin-top:8px;font-size:10px;font-weight:600;">'
+    +'<span style="color:#276749;">'+counts.normal+' Normal</span>'
+    +'<span style="color:#C05621;">'+(counts.warn||0)+' Monitor</span>'
+    +'<span style="color:#C53030;">'+(counts.critical||0)+' Critical</span>'
+    +'</div></div>'
+    +'</div>'
+    +'</div>'
+    +'</div>';
+}
+
+function sendWebhook(){
+  var url  = document.getElementById('whUrl').value.trim();
+  var btn  = document.getElementById('whBtn');
+  var st   = document.getElementById('whStatus');
+  if(!url){st.className='wh-status err';st.textContent='Enter a webhook URL.';return;}
+  btn.disabled = true;
+  st.className = 'wh-status wait';
+  st.textContent = 'Sending...';
+  var name  = document.getElementById('pName').value.trim()||'Unknown Patient';
+  var pid   = document.getElementById('pID').value.trim()||'—';
+  var blood = document.getElementById('pBlood').value||'Unknown';
+  var docN  = document.getElementById('docName').value.trim()||'Unknown';
+  var docR  = document.getElementById('docRank').value;
+  var dxP   = document.getElementById('dxPrimary').value.trim()||'—';
+  var now   = new Date();
+  var date  = now.toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
+  var time  = now.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'});
+  var ref   = 'PHM-'+now.getFullYear()+'-'+String(Math.floor(Math.random()*90000)+10000);
+  var examColors = {general:0x2B6CB0,pregnancy:0x97266D,trauma:0xC53030,psych:0x6B46C1,dental:0x276749};
+  var examLabel  = {general:'General Check-Up',pregnancy:'Pregnancy / Antenatal',trauma:'Trauma Assessment',psych:'Psychological',dental:'Dental'}[G.examType];
+  var statusEmoji = {Stable:'🟢',Critical:'🔴','Under Observation':'🟡',Discharged:'🔵'}[G.patientStatus]||'⚪';
+  var embed = {
+    username:'XOXO Hospital',
+    embeds:[{
+      title:'Medical Report — '+name,
+      description:'**Ref:** '+ref+'\n**Date:** '+date+' at '+time+'\n**Exam Type:** '+examLabel+'\n\n---',
+      color: examColors[G.examType]||0x2B6CB0,
+      fields:[
+        {name:'Patient ID',value:pid,inline:true},
+        {name:'Blood Type',value:blood,inline:true},
+        {name:'Status',value:statusEmoji+' '+G.patientStatus,inline:true},
+        {name:'Heart Rate',value:getV('vHR'),inline:true},
+        {name:'Blood Pressure',value:getV('vBP'),inline:true},
+        {name:'O2 Sat',value:getV('vO2'),inline:true},
+        {name:'Primary Diagnosis',value:dxP,inline:false},
+        {name:'Attending',value:docR+' — '+docN,inline:false}
+      ],
+      footer:{text:'XOXO Hospital · Los Santos, San Andreas · Confidential'}
+    }]
+  };
+  fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(embed)})
+    .then(function(r){
+      if(r.ok){st.className='wh-status ok';st.textContent='Sent to Discord!';}
+      else{r.text().then(function(t){st.className='wh-status err';st.textContent='Error '+r.status;});}
+      btn.disabled=false;
+    })
+    .catch(function(e){st.className='wh-status err';st.textContent=e.message;btn.disabled=false;});
+}
+
+function clearAll(){
+  if(!confirm('Clear all fields and start a new patient?'))return;
+  document.querySelectorAll('input[type=text],textarea').forEach(function(el){el.value='';});
+  document.querySelectorAll('select').forEach(function(el){el.selectedIndex=0;});
+  G.images=[];G.examType='general';G.patientStatus='Stable';
+  document.querySelectorAll('.stb').forEach(function(b){b.classList.remove('on');});
+  document.querySelector('.stb.stable').classList.add('on');
+  document.querySelectorAll('.et').forEach(function(b){b.classList.remove('on');});
+  document.querySelector('.et[data-type="general"]').classList.add('on');
+  document.getElementById('pregnancySection').classList.remove('on');
+  document.getElementById('traumaSection').classList.remove('on');
+  document.getElementById('iuPreviews').innerHTML='';
+  document.getElementById('iuPreviews').style.display='none';
+  document.getElementById('iuPlaceholder').style.display='flex';
+  document.getElementById('vitalsDisplay').style.display='none';
+  updateSummary();
+}
+</script>
+</body>
+</html>
