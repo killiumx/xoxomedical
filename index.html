@@ -146,6 +146,38 @@ body{font-family:'Inter',sans-serif;background:#F0F4F8;color:#1A2332;font-size:1
 .wh-status.err{color:var(--red);}
 .wh-status.wait{color:var(--muted);}
 
+/* ── AUTO-NOTE BUTTON ── */
+.auto-note-btn{display:inline-flex;align-items:center;gap:4px;background:#EBF8FF;border:1px solid var(--blue2);border-radius:3px;color:var(--blue);font-family:'Inter',sans-serif;font-size:9px;font-weight:600;letter-spacing:0.8px;text-transform:uppercase;padding:3px 9px;cursor:pointer;transition:all 0.15s;margin-left:8px;vertical-align:middle;}
+.auto-note-btn:hover{background:var(--blue);color:#fff;border-color:var(--blue);}
+.auto-note-btn.preg{background:var(--pinkbg);border-color:var(--pink2);color:var(--pink);}
+.auto-note-btn.preg:hover{background:var(--pink);color:#fff;border-color:var(--pink);}
+
+/* ── EMS GUIDE OVERLAY ── */
+.ems-overlay{display:none;position:fixed;inset:0;background:rgba(26,35,50,0.92);z-index:400;overflow-y:auto;}
+.ems-overlay.on{display:block;}
+.ems-panel{background:#fff;max-width:680px;margin:20px auto 40px;border-radius:8px;overflow:hidden;box-shadow:0 8px 48px rgba(0,0,0,0.5);}
+.ems-panel-head{background:#1A2332;padding:20px 24px;display:flex;align-items:center;justify-content:space-between;}
+.ems-panel-head h2{color:#fff;font-size:15px;font-weight:600;}
+.ems-panel-head p{color:rgba(255,255,255,0.45);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;margin-top:3px;}
+.ems-close{background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);border-radius:3px;color:#fff;font-size:13px;padding:6px 12px;cursor:pointer;font-family:'Inter',sans-serif;}
+.ems-close:hover{background:rgba(255,255,255,0.2);}
+.ems-body{padding:20px 24px;display:flex;flex-direction:column;gap:16px;}
+.ems-section{border:1px solid var(--light);border-radius:6px;overflow:hidden;}
+.ems-section-head{background:#F7FAFC;padding:9px 14px;display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--light);}
+.ems-section-head .es-num{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;flex-shrink:0;}
+.ems-section-head h4{font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--ink);}
+.ems-questions{padding:12px 14px;display:flex;flex-direction:column;gap:8px;}
+.ems-q{display:flex;gap:10px;align-items:flex-start;}
+.ems-q-icon{font-size:13px;flex-shrink:0;margin-top:1px;}
+.ems-q-body{}
+.ems-q-ask{font-size:12px;font-weight:600;color:var(--ink);line-height:1.4;}
+.ems-q-ask em{font-style:normal;color:var(--blue);font-style:italic;}
+.ems-q-tip{font-size:10px;color:var(--muted);margin-top:2px;line-height:1.5;}
+.ems-q-field{display:inline-block;font-size:9px;font-weight:600;letter-spacing:0.8px;text-transform:uppercase;background:#EBF8FF;color:var(--blue);border-radius:2px;padding:1px 6px;margin-top:3px;}
+.ems-note{background:#FFFAF0;border:1px solid #F6AD55;border-radius:4px;padding:10px 14px;font-size:11px;color:#C05621;line-height:1.6;}
+.ems-footer{background:#F7FAFC;border-top:1px solid var(--light);padding:14px 24px;display:flex;justify-content:space-between;align-items:center;}
+.ems-footer p{font-size:10px;color:var(--muted);}
+
 /* ── DOC OVERLAY ── */
 .overlay{display:none;position:fixed;inset:0;background:rgba(26,35,50,0.88);z-index:300;overflow-y:auto;-webkit-overflow-scrolling:touch;}
 .overlay.on{display:block;}
@@ -188,6 +220,45 @@ body{font-family:'Inter',sans-serif;background:#F0F4F8;color:#1A2332;font-size:1
 .report-footer p{font-size:10px;color:var(--muted);}
 .status-badge-report{display:inline-block;font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;padding:4px 12px;border-radius:2px;}
 
+/* ── AI SUGGEST PANEL ── */
+.ai-panel{display:none;position:fixed;inset:0;background:rgba(26,35,50,0.92);z-index:500;overflow-y:auto;}
+.ai-panel.on{display:block;}
+.ai-box{background:#fff;max-width:600px;margin:30px auto 40px;border-radius:8px;overflow:hidden;box-shadow:0 8px 48px rgba(0,0,0,0.5);}
+.ai-box-head{background:#1A2332;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;}
+.ai-box-head h2{color:#fff;font-size:14px;font-weight:600;display:flex;align-items:center;gap:8px;}
+.ai-box-body{padding:20px;display:flex;flex-direction:column;gap:14px;}
+.ai-suggestion{background:#F7FAFC;border:1px solid var(--light);border-radius:5px;overflow:hidden;}
+.ai-sug-head{display:flex;align-items:center;justify-content:space-between;padding:9px 13px;border-bottom:1px solid var(--light);background:#EBF8FF;}
+.ai-sug-label{font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--blue);}
+.ai-sug-apply{background:var(--blue);color:#fff;border:none;border-radius:3px;font-size:9px;font-weight:600;letter-spacing:0.8px;text-transform:uppercase;padding:4px 10px;cursor:pointer;font-family:'Inter',sans-serif;}
+.ai-sug-apply:hover{background:#2C5282;}
+.ai-sug-text{padding:10px 13px;font-size:12px;color:var(--ink);line-height:1.6;white-space:pre-wrap;}
+.ai-loading{text-align:center;padding:40px 20px;color:var(--muted);}
+.ai-loading .ai-spin{font-size:28px;display:block;margin-bottom:10px;animation:spin 1s linear infinite;}
+@keyframes spin{from{transform:rotate(0deg);}to{transform:rotate(360deg)};}
+.ai-err{background:var(--redbg);border:1px solid var(--red2);border-radius:4px;padding:12px;font-size:12px;color:var(--red);}
+
+/* ── /ME PANEL ── */
+.me-panel{display:none;position:fixed;inset:0;background:rgba(26,35,50,0.95);z-index:500;overflow-y:auto;}
+.me-panel.on{display:block;}
+.me-box{background:#0f1923;max-width:660px;margin:30px auto 40px;border-radius:8px;overflow:hidden;box-shadow:0 8px 48px rgba(0,0,0,0.7);}
+.me-box-head{background:#1a2a3a;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,0.08);}
+.me-box-head h2{color:#fff;font-size:14px;font-weight:600;}
+.me-box-head p{color:rgba(255,255,255,0.4);font-size:10px;letter-spacing:1px;text-transform:uppercase;margin-top:2px;}
+.me-phase{padding:14px 20px 4px;}
+.me-phase-label{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:8px;}
+.me-line{display:flex;align-items:flex-start;gap:10px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:4px;padding:10px 13px;margin-bottom:6px;cursor:pointer;transition:all 0.15s;}
+.me-line:hover{background:rgba(43,108,176,0.2);border-color:rgba(43,108,176,0.5);}
+.me-line.copied{background:rgba(39,103,73,0.25);border-color:rgba(154,230,180,0.4);}
+.me-line-text{font-family:'Courier New',monospace;font-size:12px;color:#90CDF4;line-height:1.5;flex:1;}
+.me-line-text strong{color:#FC8181;}
+.me-copy-icon{font-size:12px;opacity:0.4;flex-shrink:0;margin-top:1px;}
+.me-tip{background:rgba(43,108,176,0.15);border:1px solid rgba(43,108,176,0.3);border-radius:4px;padding:10px 14px;font-size:10px;color:rgba(255,255,255,0.5);line-height:1.6;margin:0 20px 8px;}
+.me-footer{padding:14px 20px;border-top:1px solid rgba(255,255,255,0.08);display:flex;justify-content:space-between;align-items:center;}
+.me-loading{padding:40px 20px;text-align:center;color:rgba(255,255,255,0.4);font-size:13px;}
+.me-regen{background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.7);border-radius:3px;font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;padding:7px 14px;cursor:pointer;font-family:'Inter',sans-serif;}
+.me-regen:hover{background:rgba(255,255,255,0.13);}
+
 @media print{
   .overlay{position:static;background:none;padding:0;}
   .doc-sheet{border-radius:0;max-width:100%;}
@@ -207,6 +278,9 @@ body{font-family:'Inter',sans-serif;background:#F0F4F8;color:#1A2332;font-size:1
     </div>
   </div>
   <div class="topbar-actions">
+    <button class="tbtn" style="background:#6B46C1;color:#fff;" onclick="openMePanel()">🎭 /me Actions</button>
+    <button class="tbtn" style="background:#276749;color:#fff;" onclick="openAiSuggest()">🤖 AI Suggest</button>
+    <button class="tbtn tbtn-out" onclick="document.getElementById('emsGuide').classList.add('on')" style="border-color:rgba(99,179,237,0.4);color:#90CDF4;">📋 EMS Guide</button>
     <button class="tbtn tbtn-out" onclick="openReport()">Export Report</button>
     <button class="tbtn tbtn-red" onclick="clearAll()">New Patient</button>
   </div>
@@ -223,11 +297,11 @@ body{font-family:'Inter',sans-serif;background:#F0F4F8;color:#1A2332;font-size:1
     </div>
     <div class="card-body" style="padding-bottom:14px;">
       <div class="exam-tabs">
-        <button class="et on" data-type="general" onclick="setExam('general',this)">General Check-Up</button>
-        <button class="et" data-type="pregnancy" onclick="setExam('pregnancy',this)">Pregnancy</button>
-        <button class="et" data-type="trauma" onclick="setExam('trauma',this)">Trauma / Injury</button>
-        <button class="et" data-type="psych" onclick="setExam('psych',this)">Psychological</button>
-        <button class="et" data-type="dental" onclick="setExam('dental',this)">Dental</button>
+        <button class="et on" data-type="general" onclick="setExam('general',this)">🩺 General Check-Up</button>
+        <button class="et" data-type="pregnancy" onclick="setExam('pregnancy',this)">🤰 Pregnancy / OB</button>
+        <button class="et" data-type="trauma" onclick="setExam('trauma',this)">🚑 Trauma / Injury</button>
+        <button class="et" data-type="psych" onclick="setExam('psych',this)">🧠 Psych Evaluation</button>
+        <button class="et" data-type="dental" onclick="setExam('dental',this)">🦷 Dental Exam</button>
       </div>
       <div class="fg">
         <label>Reason for Visit</label>
@@ -642,7 +716,9 @@ body{font-family:'Inter',sans-serif;background:#F0F4F8;color:#1A2332;font-size:1
         </div>
       </div>
       <div class="fg">
-        <label>OB/GYN Notes</label>
+        <label>OB/GYN Notes
+          <button class="auto-note-btn preg" onclick="generateNotes()">✨ Auto-Fill Notes</button>
+        </label>
         <textarea id="pNotes" placeholder="Prenatal observations, recommendations, next appointment..."></textarea>
       </div>
     </div>
@@ -900,7 +976,9 @@ body{font-family:'Inter',sans-serif;background:#F0F4F8;color:#1A2332;font-size:1
         </div>
       </div>
       <div class="fg">
-        <label>Doctor's Notes / Treatment Plan</label>
+        <label>Doctor's Notes / Treatment Plan
+          <button class="auto-note-btn" id="autoNoteBtn" onclick="generateNotes()">✨ Auto-Fill Notes</button>
+        </label>
         <textarea id="dxNotes" placeholder="Full treatment plan, special instructions, discharge advice..."></textarea>
       </div>
       <div class="fg">
@@ -1037,6 +1115,9 @@ function setExam(type, el){
   document.getElementById('pregQSection').classList.toggle('on', type==='pregnancy');
   document.getElementById('traumaSection').classList.toggle('on', type==='trauma');
   document.getElementById('sExam').textContent = el.textContent;
+  // Only show auto-fill notes button for general and pregnancy
+  var autoBtn = document.getElementById('autoNoteBtn');
+  if(autoBtn) autoBtn.style.display = (type==='general'||type==='pregnancy') ? '' : 'none';
 }
 
 function setStat(val, el){
@@ -1243,7 +1324,7 @@ function openReport(){
     'Discharged':        'background:#EBF8FF;color:#2B6CB0;border:1px solid #BEE3F8;'
   };
   var examColors = {general:'#2B6CB0',pregnancy:'#97266D',trauma:'#C53030',psych:'#6B46C1',dental:'#276749'};
-  var examLabels = {general:'General Check-Up',pregnancy:'Pregnancy / Antenatal',trauma:'Trauma Assessment',psych:'Psychological Evaluation',dental:'Dental Examination'};
+  var examLabels = {general:'General Check-Up',pregnancy:'Pregnancy / OB',trauma:'Trauma / Injury',psych:'Psych Evaluation',dental:'Dental Exam'};
   var examColor = examColors[G.examType]||'#2B6CB0';
   var examLabel = examLabels[G.examType]||'General Check-Up';
 
@@ -1625,66 +1706,196 @@ function sendWebhook(){
   st.textContent = 'Building report...';
   openReport();
   var name   = document.getElementById('pName').value.trim()||'Unknown Patient';
-  var now    = new Date();
-  var date   = now.toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
-  var time   = now.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'});
   var ref    = document.getElementById('reportSheet').innerHTML.match(/XH-\d{4}-\d{5}/);
   var refStr = ref ? ref[0] : 'XH-REF';
-  var examLabel = {general:'General Check-Up',pregnancy:'Pregnancy / Antenatal',trauma:'Trauma Assessment',psych:'Psychological Evaluation',dental:'Dental Examination'}[G.examType]||'Check-Up';
+
+  // Wait for report to fully render, then capture
   setTimeout(function(){
     st.textContent = 'Rendering image...';
     var sheet = document.getElementById('reportSheet');
-    html2canvas(sheet,{
-      scale: 2,
-      useCORS: true,
-      backgroundColor: '#ffffff',
-      logging: false,
-      scrollY: 0,
-      windowWidth: sheet.scrollWidth,
-      height: sheet.scrollHeight
-    }).then(function(canvas){
-      st.textContent = 'Uploading to Discord...';
-      canvas.toBlob(function(blob){
-        if(!blob){st.className='wh-status err';st.textContent='Image render failed.';btn.disabled=false;return;}
-        var filename = refStr+'-'+name.replace(/\s+/g,'-')+'.png';
-        var fd = new FormData();
-        fd.append('file', blob, filename);
-        var payload = {
-          username: 'XOXO Hospital',
-          content: '**XOXO Hospital** — Medical Report\n**Patient:** '+name+' &nbsp;|&nbsp; **Ref:** '+refStr+'\n**Exam:** '+examLabel+' &nbsp;|&nbsp; **Status:** '+G.patientStatus+'\n**Date:** '+date+' at '+time,
-          embeds: []
-        };
-        fd.append('payload_json', JSON.stringify(payload));
-        fetch(url,{method:'POST',body:fd})
-          .then(function(r){
-            if(r.ok){
-              st.className='wh-status ok';
-              st.textContent='Report image sent to Discord!';
-            } else {
-              r.text().then(function(t){
+
+    // Build a clean wrapper div positioned off-screen (left not top — avoids scroll issues)
+    var wrapper = document.createElement('div');
+    wrapper.style.cssText = [
+      'position:fixed',
+      'left:-9000px',
+      'top:0',
+      'width:780px',
+      'background:#ffffff',
+      'z-index:9999',
+      'font-family:Inter,sans-serif',
+      'font-size:13px',
+      'color:#1A2332',
+      'line-height:1.5'
+    ].join(';');
+    wrapper.innerHTML = sheet.innerHTML;
+    document.body.appendChild(wrapper);
+
+    // Give browser one frame to paint it
+    requestAnimationFrame(function(){
+      requestAnimationFrame(function(){
+        html2canvas(wrapper, {
+          scale: 2,
+          useCORS: true,
+          allowTaint: true,
+          backgroundColor: '#ffffff',
+          logging: false,
+          width: 780,
+          height: wrapper.scrollHeight,
+          scrollX: 0,
+          scrollY: 0,
+          windowWidth: 780
+        }).then(function(canvas){
+          document.body.removeChild(wrapper);
+          st.textContent = 'Uploading to Discord...';
+
+          // Convert canvas → dataURL → ArrayBuffer → Blob manually.
+          // This avoids canvas.toBlob() which routes through postMessage
+          // internally in some browsers and throws a structured-clone error
+          // when FormData is involved.
+          try {
+            var dataURL  = canvas.toDataURL('image/png');
+            var b64      = dataURL.split(',')[1];
+            var bStr     = atob(b64);
+            var len      = bStr.length;
+            var u8       = new Uint8Array(len);
+            for(var i=0;i<len;i++) u8[i] = bStr.charCodeAt(i);
+            var blob     = new Blob([u8], {type:'image/png'});
+
+            var filename = refStr+'-'+name.replace(/\s+/g,'-')+'.png';
+            var fd = new FormData();
+            fd.append('file', blob, filename);
+            fd.append('payload_json', JSON.stringify({username:'XOXO Hospital'}));
+            fetch(url,{method:'POST',body:fd})
+              .then(function(r){
+                if(r.ok){
+                  st.className='wh-status ok';
+                  st.textContent='✓ Report image sent to Discord!';
+                } else {
+                  r.text().then(function(t){
+                    st.className='wh-status err';
+                    st.textContent='Discord error '+r.status+': '+t.substring(0,80);
+                  });
+                }
+                btn.disabled=false;
+              })
+              .catch(function(e){
                 st.className='wh-status err';
-                st.textContent='Discord error '+r.status;
+                st.textContent='Network error: '+e.message;
+                btn.disabled=false;
               });
-            }
-            btn.disabled=false;
-          })
-          .catch(function(e){
+          } catch(e){
             st.className='wh-status err';
-            st.textContent='Network error: '+e.message;
+            st.textContent='Blob build error: '+e.message;
             btn.disabled=false;
-          });
-      },'image/png');
-    }).catch(function(e){
-      st.className='wh-status err';
-      st.textContent='Render error: '+e.message;
-      btn.disabled=false;
+          }
+        }).catch(function(e){
+          if(document.body.contains(wrapper)) document.body.removeChild(wrapper);
+          st.className='wh-status err';
+          st.textContent='Render error: '+e.message;
+          btn.disabled=false;
+        });
+      });
     });
-  }, 600);
+  }, 800);
 }
+
+function generateNotes(){
+  var name   = document.getElementById('pName').value.trim() || 'The patient';
+  var sex    = document.getElementById('pSex').value || '';
+  var pronoun = sex==='Male'?'He':sex==='Female'?'She':'They';
+  var pron2   = sex==='Male'?'his':sex==='Female'?'her':'their';
+
+  if(G.examType==='general'){
+    var head   = document.getElementById('xHead').value;
+    var eyes   = document.getElementById('xEyes').value;
+    var chest  = document.getElementById('xChest').value;
+    var cardio = document.getElementById('xCardio').value;
+    var abdomen= document.getElementById('xAbdomen').value;
+    var extrem = document.getElementById('xExtrem').value;
+    var skin   = document.getElementById('xSkin').value;
+    var meds   = document.getElementById('xMeds').value.trim()||'none reported';
+    var reason = document.getElementById('visitReason').value.trim()||'routine check-up';
+    var hr     = getV('vHR'); var bp = getV('vBP'); var o2 = getV('vO2');
+    var temp   = getV('vTemp'); var rr = getV('vRR'); var pain = getV('vPain');
+    var gcs    = getV('vGCS');
+
+    // flag any abnormal vitals
+    var concerns = [];
+    if(getStatus('vHR')==='critical'||getStatus('vHR')==='warn') concerns.push('heart rate ('+hr+' bpm)');
+    if(getStatus('vO2')==='critical'||getStatus('vO2')==='warn') concerns.push('O2 saturation ('+o2+')');
+    if(getStatus('vTemp')==='critical'||getStatus('vTemp')==='warn') concerns.push('temperature ('+temp+')');
+    if(getStatus('vRR')==='critical'||getStatus('vRR')==='warn') concerns.push('respiratory rate ('+rr+' br/min)');
+    if(getStatus('vPain')==='critical'||getStatus('vPain')==='warn') concerns.push('reported pain level ('+pain+'/10)');
+
+    var notes = name+' presented for '+reason+'.\n\n';
+    notes += 'EXAMINATION FINDINGS:\n';
+    notes += '• Head/Neuro: '+head+'\n';
+    notes += '• Eyes: '+eyes+'\n';
+    notes += '• Chest/Respiratory: '+chest+'\n';
+    notes += '• Cardiovascular: '+cardio+'\n';
+    notes += '• Abdomen: '+abdomen+'\n';
+    notes += '• Extremities: '+extrem+'\n';
+    notes += '• Skin/Appearance: '+skin+'\n';
+    notes += '• Current medications: '+meds+'\n\n';
+    notes += 'VITALS RECORDED:\n';
+    if(hr!=='—') notes += 'HR '+hr+' bpm | ';
+    if(bp!=='—') notes += 'BP '+bp+' mmHg | ';
+    if(o2!=='—') notes += 'O2 '+o2+' | ';
+    if(temp!=='—') notes += 'Temp '+temp+' | ';
+    if(rr!=='—') notes += 'RR '+rr+' br/min | ';
+    if(pain!=='—') notes += 'Pain '+pain+'/10';
+    notes = notes.replace(/\| $/,'');
+    if(gcs!=='—') notes += '\nConsciousness: '+gcs;
+    if(concerns.length){
+      notes += '\n\nATTENTION — Abnormal findings noted: '+concerns.join(', ')+'. Monitoring advised.';
+    }
+    notes += '\n\nPatient status at time of assessment: '+G.patientStatus+'.';
+    document.getElementById('dxNotes').value = notes;
+
+  } else if(G.examType==='pregnancy'){
+    var gestAge  = document.getElementById('pGestAge').value || 'unknown gestation';
+    var babies   = document.getElementById('pBabies').value;
+    var pregType = document.getElementById('pPregType').value;
+    var fhr      = document.getElementById('pFHR').value || 'not assessed';
+    var position = document.getElementById('pPosition').value;
+    var fluid    = document.getElementById('pFluid').value;
+    var complic  = document.getElementById('pComplications').value;
+    var previous = document.getElementById('pPrevious').value;
+    var reason2  = document.getElementById('visitReason').value.trim()||'routine antenatal check-up';
+    var bpPreg   = getV('vBP'); var hrPreg = getV('vHR');
+
+    var notes2 = name+' presented for '+reason2+'.\n\n';
+    notes2 += 'OBSTETRIC ASSESSMENT:\n';
+    notes2 += '• Gestational age: '+gestAge+'\n';
+    notes2 += '• Carrying: '+babies+' ('+pregType+')\n';
+    notes2 += '• Previous pregnancies: '+previous+'\n';
+    notes2 += '• Fetal heart rate: '+fhr+'\n';
+    notes2 += '• Baby position: '+position+'\n';
+    notes2 += '• Amniotic fluid: '+fluid+'\n';
+    notes2 += '• Complications/flags: '+complic+'\n\n';
+    if(hrPreg!=='—'||bpPreg!=='—'){
+      notes2 += 'MATERNAL VITALS:\n';
+      if(hrPreg!=='—') notes2 += 'HR '+hrPreg+' bpm | ';
+      if(bpPreg!=='—') notes2 += 'BP '+bpPreg+' mmHg';
+      notes2 = notes2.replace(/\| $/,'')+'\n\n';
+    }
+    if(complic && complic.indexOf('None')===-1 && complic.toLowerCase().indexOf('healthy')===-1){
+      notes2 += 'NOTE: Complication flagged — '+complic+'. Escalate as appropriate.\n\n';
+    }
+    if(G.pregScore){
+      notes2 += 'Pregnancy health questionnaire score: '+G.pregScore+'/100.\n';
+    }
+    notes2 += 'Patient status: '+G.patientStatus+'.';
+    document.getElementById('pNotes').value = notes2;
+    document.getElementById('dxNotes').value = 'Antenatal visit — see OB/GYN Notes above for full obstetric details.\nPatient '+name+' assessed at '+gestAge+'. Status: '+G.patientStatus+'.';
+  }
+}
+
 
 function clearAll(){
   if(!confirm('Clear all fields and start a new patient?'))return;
-  document.querySelectorAll('input[type=text],textarea').forEach(function(el){el.value='';});
+  document.querySelectorAll('input[type=text],textarea').forEach(function(el){el.value='';})
   document.querySelectorAll('select').forEach(function(el){el.selectedIndex=0;});
   G.images=[];G.examType='general';G.patientStatus='Stable';
   document.querySelectorAll('.stb').forEach(function(b){b.classList.remove('on');});
@@ -1700,7 +1911,462 @@ function clearAll(){
   document.getElementById('vitalsDisplay').style.display='none';
   updateSummary();
 }
+
+// ── HELPERS ──────────────────────────────────────────────────────────────
+function escHtml(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+function collectFormData(){
+  function v(id){ var el=document.getElementById(id); return el?el.value.trim():''; }
+  return {
+    examType:G.examType, status:G.patientStatus,
+    name:v('pName')||'Unknown', dob:v('pDOB'), sex:v('pSex'), blood:v('pBlood'),
+    height:v('pHeight'), weight:v('pWeight'), allergies:v('pAllergies'),
+    insurance:v('pInsurance'), reason:v('visitReason'),
+    hr:getV('vHR'), hrSt:getStatus('vHR'), bp:getV('vBP'), bpSt:getStatus('vBP'),
+    o2:getV('vO2'), o2St:getStatus('vO2'), temp:getV('vTemp'), tempSt:getStatus('vTemp'),
+    rr:getV('vRR'), rrSt:getStatus('vRR'), pain:getV('vPain'), painSt:getStatus('vPain'),
+    gcs:getV('vGCS'), glucose:getV('vGlucose'),
+    head:v('xHead'), eyes:v('xEyes'), chest:v('xChest'), cardio:v('xCardio'),
+    abdomen:v('xAbdomen'), extrem:v('xExtrem'), skin:v('xSkin'), meds:v('xMeds'),
+    xNotes:v('xNotes'), dxPrimary:v('dxPrimary'), dxSecondary:v('dxSecondary'),
+    dxMeds:v('dxMeds'), dxFollowUp:v('dxFollowUp'), dxNotes:v('dxNotes'),
+    docName:v('docName'), docRank:v('docRank'),
+    gestAge:v('pGestAge'), babies:v('pBabies'), fhr:v('pFHR'),
+    position:v('pPosition'), fluid:v('pFluid'), complic:v('pComplications'), previous:v('pPrevious')
+  };
+}
+
+// ── AI SUGGEST ───────────────────────────────────────────────────────────
+function openAiSuggest(){
+  document.getElementById('aiPanel').classList.add('on');
+  document.getElementById('aiPanelBody').innerHTML='<div class="ai-loading"><span class="ai-spin">⚙</span>Analysing patient data...</div>';
+  runAiSuggest();
+}
+
+async function runAiSuggest(){
+  var d=collectFormData(), body=document.getElementById('aiPanelBody');
+  var prompt='You are a medical AI assistant for a GTA 5 roleplay hospital called XOXO Hospital in Los Santos. Based on the patient data below, generate realistic but fictional clinical suggestions for the form fields. Respond ONLY with a valid JSON object, no markdown or backticks.\n\nPatient data:\n'+JSON.stringify(d,null,2)+'\n\nReturn exactly:\n{"primaryDiagnosis":"...","secondaryDiagnosis":"...","medicationsPrescribed":"...","examNotes":"...","doctorNotes":"..."}\n\nBe concise. doctorNotes: 3-4 sentences. examNotes: 2-3 sentences. Fit GTA RP context (Los Santos city life, gunshots, accidents, etc). If pregnancy exam focus on obstetric details.';
+  try {
+    var resp=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:700,messages:[{role:'user',content:prompt}]})});
+    var data=await resp.json();
+    var text=(data.content||[]).map(function(c){return c.text||'';}).join('');
+    var obj=JSON.parse(text.replace(/```json|```/g,'').trim());
+    var sugs=[
+      {field:'dxPrimary',   label:'Primary Diagnosis',     val:obj.primaryDiagnosis},
+      {field:'dxSecondary', label:'Secondary Diagnosis',   val:obj.secondaryDiagnosis},
+      {field:'dxMeds',      label:'Medications',           val:obj.medicationsPrescribed},
+      {field:'xNotes',      label:'Examination Notes',     val:obj.examNotes},
+      {field:'dxNotes',     label:"Doctor's Notes",        val:obj.doctorNotes}
+    ].filter(function(s){return s.val&&s.val.trim()&&s.val!=='—';});
+    if(!sugs.length){body.innerHTML='<div class="ai-err">No suggestions — fill in more patient info first.</div>';return;}
+    var html=sugs.map(function(s,i){
+      return '<div class="ai-suggestion">'
+        +'<div class="ai-sug-head"><span class="ai-sug-label">'+s.label+'</span>'
+        +'<button class="ai-sug-apply" onclick="applyAiSug(\''+s.field+'\',this)">Apply</button></div>'
+        +'<div class="ai-sug-text" data-val="'+s.val.replace(/"/g,'&quot;')+'">'+escHtml(s.val)+'</div>'
+        +'</div>';
+    }).join('');
+    html+='<div style="text-align:center;margin-top:10px;">'
+      +'<button class="tbtn tbtn-blue" onclick="applyAllAi()" style="font-size:11px;">✅ Apply All</button></div>';
+    body.innerHTML=html;
+    body._sugs=sugs;
+  } catch(e){
+    body.innerHTML='<div class="ai-err">Error: '+escHtml(e.message)+'</div>';
+  }
+}
+
+function applyAiSug(fieldId, btn){
+  var val=btn.closest('.ai-suggestion').querySelector('.ai-sug-text').dataset.val;
+  var el=document.getElementById(fieldId);
+  if(el){el.value=val;el.style.background='#F0FFF4';setTimeout(function(){el.style.background='';},1600);}
+}
+function applyAllAi(){
+  var body=document.getElementById('aiPanelBody');
+  if(body._sugs) body._sugs.forEach(function(s){
+    var el=document.getElementById(s.field);
+    if(el){el.value=s.val;el.style.background='#F0FFF4';setTimeout(function(){el.style.background='';},1600);}
+  });
+  document.getElementById('aiPanel').classList.remove('on');
+}
+
+// ── /ME ACTIONS ──────────────────────────────────────────────────────────
+function openMePanel(){
+  document.getElementById('mePanel').classList.add('on');
+  document.getElementById('mePanelBody').innerHTML='<div class="me-loading">⚙ Generating /me actions...</div>';
+  runMePanel();
+}
+
+async function runMePanel(){
+  var d=collectFormData(), body=document.getElementById('mePanelBody');
+  var vitals=[
+    d.hr!=='—'?'HR '+d.hr+' bpm ('+d.hrSt+')':'',
+    d.bp!=='—'?'BP '+d.bp+' ('+d.bpSt+')':'',
+    d.o2!=='—'?'O2 '+d.o2+' ('+d.o2St+')':'',
+    d.temp!=='—'?'Temp '+d.temp+' ('+d.tempSt+')':'',
+    d.pain!=='—'?'Pain '+d.pain+'/10':'',
+    d.gcs!=='—'?'GCS '+d.gcs:''
+  ].filter(Boolean).join(', ')||'no vitals recorded yet';
+  var isPreg=d.examType==='pregnancy';
+  var prompt='You are writing GTA 5 EMS/hospital roleplay /me commands for a medic at XOXO Hospital in Los Santos.\n\nPatient info:\n- Name: '+d.name+'\n- Exam type: '+(isPreg?'Obstetric/pregnancy':'General medical')+'\n- Reason: '+(d.reason||'not stated')+'\n- Vitals: '+vitals+'\n- Status: '+d.status+(d.dxPrimary?'\n- Diagnosis: '+d.dxPrimary:'')+(d.dxMeds?'\n- Meds: '+d.dxMeds:'')+(isPreg?'\n- Gestational age: '+d.gestAge+'\n- FHR: '+d.fhr+'\n- Complications: '+d.complic:'')+'\n\nWrite realistic GTA 5 RP /me lines for a medic carrying out this full encounter from arrival to handover. Use the actual patient data above in the lines (specific vitals, findings, meds). Each line under 120 chars. Third person present tense. Make it immersive and detailed for serious RP.\n\nRespond ONLY as valid JSON, no markdown:\n{"phases":[{"label":"Arrival & Scene","lines":["/me ..."]},{"label":"Assessment & Vitals","lines":["/me ..."]},{"label":"Examination","lines":["/me ..."]},{"label":"Treatment","lines":["/me ..."]},{"label":"Documentation & Handover","lines":["/me ..."]}]}\n\nEach phase: 3-5 lines. Make them specific to this patient, not generic.';
+  try {
+    var resp=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1400,messages:[{role:'user',content:prompt}]})});
+    var data=await resp.json();
+    var text=(data.content||[]).map(function(c){return c.text||'';}).join('');
+    var obj=JSON.parse(text.replace(/```json|```/g,'').trim());
+    var html='<div class="me-tip">💡 Click any line to copy it instantly. Regenerate after updating patient data.</div>';
+    obj.phases.forEach(function(phase){
+      html+='<div class="me-phase"><div class="me-phase-label">'+escHtml(phase.label)+'</div>';
+      phase.lines.forEach(function(line){
+        var display=escHtml(line).replace(/^\/me\s*/i,'<strong>/me</strong> ');
+        html+='<div class="me-line" onclick="copyMeLine(this,'+JSON.stringify(line)+')">'
+          +'<span class="me-line-text">'+display+'</span>'
+          +'<span class="me-copy-icon">📋</span></div>';
+      });
+      html+='</div>';
+    });
+    body.innerHTML=html;
+  } catch(e){
+    body.innerHTML='<div style="padding:20px;color:#FC8181;font-size:12px;">Error: '+escHtml(e.message)+'</div>';
+  }
+}
+
+function copyMeLine(el,text){
+  var icon=el.querySelector('.me-copy-icon');
+  function done(){el.classList.add('copied');if(icon)icon.textContent='✓';setTimeout(function(){el.classList.remove('copied');if(icon)icon.textContent='📋';},1800);}
+  if(navigator.clipboard){navigator.clipboard.writeText(text).then(done).catch(done);}
+  else{var ta=document.createElement('textarea');ta.value=text;ta.style.cssText='position:fixed;opacity:0;';document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);done();}
+}
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<!-- EMS QUESTION GUIDE OVERLAY -->
+<div class="ems-overlay" id="emsGuide">
+  <div class="ems-panel">
+    <div class="ems-panel-head">
+      <div>
+        <h2>🚑 EMS Patient Interview Guide</h2>
+        <p>Step-by-step questions to ask — fill the form as you go</p>
+      </div>
+      <button class="ems-close" onclick="document.getElementById('emsGuide').classList.remove('on')">✕ Close</button>
+    </div>
+    <div class="ems-body">
+
+      <div class="ems-note">
+        💡 <strong>Tip:</strong> Keep this guide open alongside the form. Work through each section in order — ask the question, then fill in the answer before moving on.
+      </div>
+
+      <!-- STEP 1 -->
+      <div class="ems-section">
+        <div class="ems-section-head">
+          <div class="es-num" style="background:#2B6CB0;">1</div>
+          <h4>Patient Identity</h4>
+        </div>
+        <div class="ems-questions">
+          <div class="ems-q">
+            <div class="ems-q-icon">💬</div>
+            <div class="ems-q-body">
+              <div class="ems-q-ask"><em>"Can I get your full name?"</em></div>
+              <div class="ems-q-tip">First and last name. If unconscious, check ID or ask bystanders.</div>
+              <div class="ems-q-field">→ Full Name field</div>
+            </div>
+          </div>
+          <div class="ems-q">
+            <div class="ems-q-icon">💬</div>
+            <div class="ems-q-body">
+              <div class="ems-q-ask"><em>"What's your date of birth?"</em></div>
+              <div class="ems-q-tip">Format: DD/MM/YYYY</div>
+              <div class="ems-q-field">→ Date of Birth field</div>
+            </div>
+          </div>
+          <div class="ems-q">
+            <div class="ems-q-icon">💬</div>
+            <div class="ems-q-body">
+              <div class="ems-q-ask"><em>"Do you have a Citizen ID on you?"</em></div>
+              <div class="ems-q-tip">Check wallet if patient is incapacitated.</div>
+              <div class="ems-q-field">→ Citizen ID field</div>
+            </div>
+          </div>
+          <div class="ems-q">
+            <div class="ems-q-icon">💬</div>
+            <div class="ems-q-body">
+              <div class="ems-q-ask"><em>"Who should we contact in an emergency? Name and number?"</em></div>
+              <div class="ems-q-field">→ Emergency Contact field</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 2 -->
+      <div class="ems-section">
+        <div class="ems-section-head">
+          <div class="es-num" style="background:#C53030;">2</div>
+          <h4>Chief Complaint</h4>
+        </div>
+        <div class="ems-questions">
+          <div class="ems-q">
+            <div class="ems-q-icon">💬</div>
+            <div class="ems-q-body">
+              <div class="ems-q-ask"><em>"What brings you in today? What happened?"</em></div>
+              <div class="ems-q-tip">Let them describe freely. Note time of onset.</div>
+              <div class="ems-q-field">→ Reason for Visit / Exam Type</div>
+            </div>
+          </div>
+          <div class="ems-q">
+            <div class="ems-q-icon">💬</div>
+            <div class="ems-q-body">
+              <div class="ems-q-ask"><em>"On a scale of 0 to 10 — zero being no pain at all, ten being the absolute worst — where are you right now?"</em></div>
+              <div class="ems-q-tip">0–3 mild, 4–6 moderate, 7–10 severe/critical.</div>
+              <div class="ems-q-field">→ Pain Level (Vitals)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 3 -->
+      <div class="ems-section">
+        <div class="ems-section-head">
+          <div class="es-num" style="background:#276749;">3</div>
+          <h4>Vitals — Measure &amp; Record</h4>
+        </div>
+        <div class="ems-questions">
+          <div class="ems-q">
+            <div class="ems-q-icon">📟</div>
+            <div class="ems-q-body">
+              <div class="ems-q-ask">Take Heart Rate reading</div>
+              <div class="ems-q-tip">Normal: 60–100 bpm. Below 60 = bradycardia. Above 100 = tachycardia.</div>
+              <div class="ems-q-field">→ Heart Rate dropdown</div>
+            </div>
+          </div>
+          <div class="ems-q">
+            <div class="ems-q-icon">📟</div>
+            <div class="ems-q-body">
+              <div class="ems-q-ask">Take Blood Pressure reading</div>
+              <div class="ems-q-tip">Normal: 90–130 systolic / 60–85 diastolic. Note both numbers.</div>
+              <div class="ems-q-field">→ Blood Pressure dropdown</div>
+            </div>
+          </div>
+          <div class="ems-q">
+            <div class="ems-q-icon">📟</div>
+            <div class="ems-q-body">
+              <div class="ems-q-ask">Check O2 Saturation via pulse oximeter</div>
+              <div class="ems-q-tip">Normal: 96–100%. Below 94% = concerning. Below 90% = critical.</div>
+              <div class="ems-q-field">→ O2 Saturation dropdown</div>
+            </div>
+          </div>
+          <div class="ems-q">
+            <div class="ems-q-icon">📟</div>
+            <div class="ems-q-body">
+              <div class="ems-q-ask">Take Temperature</div>
+              <div class="ems-q-tip">Normal: 97–99°F. Above 100.4°F = fever. Above 103°F = critical.</div>
+              <div class="ems-q-field">→ Temperature dropdown</div>
+            </div>
+          </div>
+          <div class="ems-q">
+            <div class="ems-q-icon">📟</div>
+            <div class="ems-q-body">
+              <div class="ems-q-ask">Count Respiratory Rate (breaths per minute)</div>
+              <div class="ems-q-tip">Normal: 12–20 br/min. Count for 30 seconds, multiply by 2.</div>
+              <div class="ems-q-field">→ Resp. Rate dropdown</div>
+            </div>
+          </div>
+          <div class="ems-q">
+            <div class="ems-q-icon">📟</div>
+            <div class="ems-q-body">
+              <div class="ems-q-ask">Assess Level of Consciousness</div>
+              <div class="ems-q-tip">Is patient alert and talking clearly? Confused? Responding to voice only? Not responding?</div>
+              <div class="ems-q-field">→ Consciousness dropdown</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 4 -->
+      <div class="ems-section">
+        <div class="ems-section-head">
+          <div class="es-num" style="background:#6B46C1;">4</div>
+          <h4>Medical History</h4>
+        </div>
+        <div class="ems-questions">
+          <div class="ems-q">
+            <div class="ems-q-icon">💬</div>
+            <div class="ems-q-body">
+              <div class="ems-q-ask"><em>"Any known allergies — medications, food, anything?"</em></div>
+              <div class="ems-q-tip">If none, write "NKDA" (No Known Drug Allergies).</div>
+              <div class="ems-q-field">→ Known Allergies field (Patient Info)</div>
+            </div>
+          </div>
+          <div class="ems-q">
+            <div class="ems-q-icon">💬</div>
+            <div class="ems-q-body">
+              <div class="ems-q-ask"><em>"Are you currently taking any medications?"</em></div>
+              <div class="ems-q-tip">Ask for name, dose, and how often. Include OTC meds and supplements.</div>
+              <div class="ems-q-field">→ Current Medications (Physical Exam)</div>
+            </div>
+          </div>
+          <div class="ems-q">
+            <div class="ems-q-icon">💬</div>
+            <div class="ems-q-body">
+              <div class="ems-q-ask"><em>"Do you have any existing medical conditions we should know about?"</em></div>
+              <div class="ems-q-tip">Diabetes, heart disease, asthma, blood disorders, etc.</div>
+              <div class="ems-q-field">→ Doctor's Notes / Examination Notes</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 5 -->
+      <div class="ems-section">
+        <div class="ems-section-head">
+          <div class="es-num" style="background:#2B6CB0;">5</div>
+          <h4>Physical Examination — General Check-Up</h4>
+        </div>
+        <div class="ems-questions">
+          <div class="ems-q">
+            <div class="ems-q-icon">🩺</div>
+            <div class="ems-q-body">
+              <div class="ems-q-ask">Assess Head &amp; Neurological</div>
+              <div class="ems-q-tip"><em>"Any headache, dizziness, or confusion?"</em> Check for visible injuries, pupils equal and reactive?</div>
+              <div class="ems-q-field">→ Head / Neuro + Eyes dropdowns</div>
+            </div>
+          </div>
+          <div class="ems-q">
+            <div class="ems-q-icon">🩺</div>
+            <div class="ems-q-body">
+              <div class="ems-q-ask">Auscultate Chest &amp; Heart</div>
+              <div class="ems-q-tip"><em>"Any chest pain or difficulty breathing?"</em> Listen for abnormal sounds, check rhythm.</div>
+              <div class="ems-q-field">→ Chest / Respiratory + Cardiovascular dropdowns</div>
+            </div>
+          </div>
+          <div class="ems-q">
+            <div class="ems-q-icon">🩺</div>
+            <div class="ems-q-body">
+              <div class="ems-q-ask">Palpate Abdomen</div>
+              <div class="ems-q-tip"><em>"Any abdominal pain or tenderness?"</em> Check for rigidity, guarding, distension.</div>
+              <div class="ems-q-field">→ Abdomen dropdown</div>
+            </div>
+          </div>
+          <div class="ems-q">
+            <div class="ems-q-icon">🩺</div>
+            <div class="ems-q-body">
+              <div class="ems-q-ask">Check Extremities &amp; Skin</div>
+              <div class="ems-q-tip">Full range of motion? Any swelling, bruising, lacerations, fractures? Color and temperature of skin?</div>
+              <div class="ems-q-field">→ Extremities + Skin dropdowns</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 6 -->
+      <div class="ems-section">
+        <div class="ems-section-head">
+          <div class="es-num" style="background:#97266D;">6</div>
+          <h4>Pregnancy — Additional Questions</h4>
+        </div>
+        <div class="ems-questions">
+          <div class="ems-q">
+            <div class="ems-q-icon">💬</div>
+            <div class="ems-q-body">
+              <div class="ems-q-ask"><em>"How far along are you?"</em></div>
+              <div class="ems-q-tip">Weeks of pregnancy / trimester. If unknown, note "patient unsure."</div>
+              <div class="ems-q-field">→ Gestational Age dropdown</div>
+            </div>
+          </div>
+          <div class="ems-q">
+            <div class="ems-q-icon">💬</div>
+            <div class="ems-q-body">
+              <div class="ems-q-ask"><em>"Is this your first pregnancy?"</em></div>
+              <div class="ems-q-tip">Note any previous pregnancies, C-sections, or miscarriages.</div>
+              <div class="ems-q-field">→ Previous Pregnancies dropdown</div>
+            </div>
+          </div>
+          <div class="ems-q">
+            <div class="ems-q-icon">💬</div>
+            <div class="ems-q-body">
+              <div class="ems-q-ask"><em>"Are you feeling baby movement?"</em> / <em>"Any contractions, bleeding, or pain?"</em></div>
+              <div class="ems-q-tip">Reduced movement or bleeding = escalate immediately. Check complications dropdown.</div>
+              <div class="ems-q-field">→ Complications / Flags dropdown</div>
+            </div>
+          </div>
+          <div class="ems-q">
+            <div class="ems-q-icon">📟</div>
+            <div class="ems-q-body">
+              <div class="ems-q-ask">Check Fetal Heart Rate with Doppler if available</div>
+              <div class="ems-q-tip">Normal FHR: 110–170 bpm. Outside this range = monitor closely.</div>
+              <div class="ems-q-field">→ Fetal Heart Rate dropdown</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 7 -->
+      <div class="ems-section">
+        <div class="ems-section-head">
+          <div class="es-num" style="background:#276749;">7</div>
+          <h4>Wrap Up &amp; Handover</h4>
+        </div>
+        <div class="ems-questions">
+          <div class="ems-q">
+            <div class="ems-q-icon">📝</div>
+            <div class="ems-q-body">
+              <div class="ems-q-ask">Complete Diagnosis &amp; Plan section</div>
+              <div class="ems-q-tip">Enter primary findings, any meds prescribed, and follow-up instructions. Hit <strong>✨ Auto-Fill Notes</strong> to generate a draft clinical note.</div>
+              <div class="ems-q-field">→ Diagnosis &amp; Plan section</div>
+            </div>
+          </div>
+          <div class="ems-q">
+            <div class="ems-q-icon">📝</div>
+            <div class="ems-q-body">
+              <div class="ems-q-ask">Set Patient Status &amp; sign off</div>
+              <div class="ems-q-tip">Select Stable / Observation / Critical / Discharged. Enter your name and badge number in Attending Staff.</div>
+              <div class="ems-q-field">→ Patient Status + Attending Staff</div>
+            </div>
+          </div>
+          <div class="ems-q">
+            <div class="ems-q-icon">📤</div>
+            <div class="ems-q-body">
+              <div class="ems-q-ask">Export &amp; Send Report</div>
+              <div class="ems-q-tip">Use <strong>Export Report</strong> to preview the full PDF, or paste your Discord webhook URL and hit <strong>Send Report as Image</strong>.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="ems-footer">
+      <p>XOXO Hospital · EMS Patient Interview Protocol</p>
+      <button class="tbtn tbtn-blue" onclick="document.getElementById('emsGuide').classList.remove('on')">Close Guide</button>
+    </div>
+  </div>
+</div>
+<!-- AI SUGGEST PANEL -->
+<div class="ai-panel" id="aiPanel">
+  <div class="ai-box">
+    <div class="ai-box-head">
+      <h2>🤖 AI Auto-Fill Suggestions</h2>
+      <button class="ems-close" onclick="document.getElementById('aiPanel').classList.remove('on')">✕ Close</button>
+    </div>
+    <div class="ai-box-body" id="aiPanelBody">
+      <div class="ai-loading"><span class="ai-spin">⚙</span>Analysing patient data...</div>
+    </div>
+  </div>
+</div>
+
+<!-- /ME ACTIONS PANEL -->
+<div class="me-panel" id="mePanel">
+  <div class="me-box">
+    <div class="me-box-head">
+      <div>
+        <h2>🎭 /me Roleplay Actions</h2>
+        <p>GTA V EMS RP — click any line to copy</p>
+      </div>
+      <button class="ems-close" onclick="document.getElementById('mePanel').classList.remove('on')">✕ Close</button>
+    </div>
+    <div id="mePanelBody"><div class="me-loading">⚙ Generating /me actions...</div></div>
+    <div class="me-footer">
+      <span style="font-size:10px;color:rgba(255,255,255,0.3);">Click any line to copy it</span>
+      <button class="me-regen" onclick="runMePanel()">↺ Regenerate</button>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
